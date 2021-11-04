@@ -1,14 +1,15 @@
 package pl.kietlinski.goodcoolories.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "recipes")
 public class Recipe {
@@ -22,5 +23,24 @@ public class Recipe {
     private int preparationTime;
     @Column(length = 1000)
     private String description;
+
+    @OneToMany(mappedBy = "recipe")
+    private Set<Ingredient> ingredientSet;
+
+    public Recipe(boolean levelOfDifficulty, int preparationTime, String description) {
+        this.levelOfDifficulty = levelOfDifficulty;
+        this.preparationTime = preparationTime;
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "recipeId=" + recipeId +
+                ", levelOfDifficulty=" + levelOfDifficulty +
+                ", preparationTime=" + preparationTime +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
 

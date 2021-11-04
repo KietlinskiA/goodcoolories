@@ -1,15 +1,15 @@
 package pl.kietlinski.goodcoolories.Entity;
 
 import jdk.jfr.Unsigned;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "ingredients")
 public class Ingredient {
@@ -32,4 +32,26 @@ public class Ingredient {
     @Unsigned
     private double carbohydrates;
 
+    @ManyToOne
+    private Recipe recipe;
+
+    public Ingredient(String name, int kcal, double protein, double fat, double carbohydrates) {
+        this.name = name;
+        this.kcal = kcal;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbohydrates = carbohydrates;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "ingredientId=" + ingredientId +
+                ", name='" + name + '\'' +
+                ", kcal=" + kcal +
+                ", protein=" + protein +
+                ", fat=" + fat +
+                ", carbohydrates=" + carbohydrates +
+                '}';
+    }
 }

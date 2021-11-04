@@ -1,14 +1,14 @@
 package pl.kietlinski.goodcoolories.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "dishes")
 public class Dish {
@@ -23,4 +23,23 @@ public class Dish {
     @Column(length = 100)
     private String photo;
 
+    @OneToOne
+    private Recipe recipe;
+
+    public Dish(String name, String description, String photo) {
+        this.name = name;
+        this.description = description;
+        this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "dishId=" + dishId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", photo='" + photo + '\'' +
+                ", recipe=" + recipe +
+                '}';
+    }
 }
