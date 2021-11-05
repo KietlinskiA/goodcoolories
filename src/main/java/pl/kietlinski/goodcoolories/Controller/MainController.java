@@ -21,21 +21,14 @@ public class MainController {
         return "start";
     }
 
-
     @GetMapping("/contact")
     public String getContact() {
         return "contactForm";
     }
 
-//    @GetMapping("/ingredients")
-//    public List<Ingredient> getIngredients() {
-//        return mainService.getIngredientRepository().findAll();
-//    }
-//
-//    @GetMapping("/recipes")
-//    public List<Recipe> getRecipes() {
-//        return mainService.getRecipeRepository().findAll();
-//    }
-
+    @GetMapping("/order")
+    public String getOrder() {
+        return "orderFromClient";
+    }
 
 }
