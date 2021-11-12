@@ -246,7 +246,7 @@
     </div>
     <div class="item">
       <p>Płeć</p>
-      <select required>
+      <select required name="sex">
         <option value="" disabled selected></option>
         <option value="female" >Kobieta</option>
         <option value="male">Mężczyzna</option>
@@ -271,7 +271,7 @@
     </div>
     <div class="item">
       <p>Ilość posiłków w ciągu dnia</p>
-      <select required>
+      <select required name="dishCount">
         <option value="" disabled selected></option>
         <option value="3">3</option>
         <option value="4">4</option>
@@ -280,8 +280,8 @@
       </select>
     </div>
     <div class="item">
-      <label for="visit">Uwagi dotyczące diety (Napisz na co masz alergie, czego nie lubisz?)</label>
-      <textarea id="visit" rows="3" required></textarea>
+      <label for="comment">Uwagi dotyczące diety (Napisz na co masz alergie, czego nie lubisz?)</label>
+      <textarea id="comment" rows="3" name="comment" maxlength="1000" required></textarea>
     </div>
     <div class="question">
       <div class="question-answer">
@@ -292,7 +292,7 @@
       </div>
     </div>
     <div class="btn-block">
-      <button type="submit" href="/dish">Submit</button>
+      <button type="submit" href="/order">Submit</button>
     </div>
   </form>
 </div>
