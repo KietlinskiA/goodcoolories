@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html xmlns:th="http://www.thymeleaf.org/" lang="pl">
 <head>
   <title>GoodCoolories - skorzystaj już teraz!</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
@@ -203,7 +203,7 @@
 </head>
 <body>
 <div class="testbox">
-  <form action="/">
+  <form th:action="@{/new-order}" th:object="${order}">
     <div class="banner">
       <h1>Skorzystaj z oferty dietetyka</h1>
     </div>
@@ -217,11 +217,11 @@
       </div>
       <div class="item">
         <label for="eaddress">Adres email<span>*</span></label>
-        <input id="eaddress" type="text"   name="eaddress" required/>
+        <input id="eaddress" type="email"   name="eaddress" required/>
       </div>
       <div class="item">
         <label for="phone">Telefon<span>*</span></label>
-        <input id="phone" type="tel"   name="phone" required/>
+        <input id="phone" type="tel" placeholder="123456789" name="phone" maxlength="9" required/>
       </div>
       <div class="item">
         <label for="street">Ulica<span>*</span></label>
@@ -229,7 +229,7 @@
       </div>
       <div class="item">
         <label for="zip">Kod pocztowy<span>*</span></label>
-        <input id="zip" type="text"   name="zip" required/>
+        <input id="zip" type="text" placeholder="00-000" name="zip"  maxlength="6" required/>
       </div>
       <div class="item">
         <label for="city">Miasto<span>*</span></label>
@@ -237,18 +237,18 @@
       </div>
       <div class="item">
         <label for="age">Wiek<span>*</span></label>
-        <input id="age" type="number"   name="age" required/>
+        <input id="age" type="number" value="18" name="age" maxlength="2" required/>
       </div>
       <div class="item">
         <label for="height">Wzrost<span>*</span></label>
-        <input id="height" type="number"   name="height" required/>
+        <input id="height" type="number" value="160" name="height" maxlength="3" minlength="3" required/>
       </div>
     </div>
     <div class="item">
       <p>Płeć</p>
       <select required name="sex">
         <option value="" disabled selected></option>
-        <option value="female" >Kobieta</option>
+        <option value="female">Kobieta</option>
         <option value="male">Mężczyzna</option>
       </select>
     </div>

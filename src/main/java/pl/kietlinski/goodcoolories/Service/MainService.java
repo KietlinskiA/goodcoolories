@@ -8,6 +8,7 @@ import pl.kietlinski.goodcoolories.Entity.Ingredient;
 import pl.kietlinski.goodcoolories.Entity.Recipe;
 import pl.kietlinski.goodcoolories.Repository.DishRepository;
 import pl.kietlinski.goodcoolories.Repository.IngredientRepository;
+import pl.kietlinski.goodcoolories.Repository.OrderRepository;
 import pl.kietlinski.goodcoolories.Repository.RecipeRepository;
 
 @Service
@@ -17,12 +18,14 @@ public class MainService {
     private RecipeRepository recipeRepository;
     private IngredientRepository ingredientRepository;
     private DishRepository dishRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    public MainService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository) {
+    public MainService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.dishRepository = dishRepository;
+        this.orderRepository = orderRepository;
     }
 
     public void initDatabase() {

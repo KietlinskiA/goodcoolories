@@ -47,8 +47,7 @@ public class Order {
     @Column(length = 1000, nullable = false)
     private String comment;
 
-    public Order(long orderId, String name, String eaddress, String phone, String street, String zip, String city, int age, int height, String sex, String activity, int dishCount, String comment) {
-        this.orderId = orderId;
+    public Order(String name, String eaddress, String phone, String street, String zip, String city, int age, int height, String sex, String activity, int dishCount, String comment) {
         this.name = name;
         this.eaddress = eaddress;
         this.phone = phone;
