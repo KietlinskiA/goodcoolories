@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 
 @Getter
 @Setter
@@ -20,16 +21,12 @@ public class Ingredient {
     @Column(length = 100, nullable = false)
     private String name;
     @Column(length = 500, nullable = false)
-    @Unsigned
     private int kcal;
     @Column(scale = 100, nullable = false)
-    @Unsigned
     private double protein;
     @Column(scale = 100, nullable = false)
-    @Unsigned
     private double fat;
     @Column(scale = 100, nullable = false)
-    @Unsigned
     private double carbohydrates;
 
     @ManyToOne
