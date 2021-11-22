@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,16 +19,19 @@ public class Recipe {
     @Column(name = "recipe_id")
     private long recipeId;
     @Column(name = "level_of_difficulty")
-    private boolean levelOfDifficulty;
+    private String levelOfDifficulty;
     @Column(name = "preparation_time")
     private int preparationTime;
     @Column(length = 1000)
     private String description;
 
-    @OneToMany(mappedBy = "recipe")
-    private Set<Ingredient> ingredientSet;
+    @OneToOne(mappedBy = "recipe")
+    private Dish dish;
 
-    public Recipe(boolean levelOfDifficulty, int preparationTime, String description) {
+    @OneToMany(mappedBy = "recipe")
+    private List<Ingredient> ingredientList;
+
+    public Recipe(String levelOfDifficulty, int preparationTime, String description) {
         this.levelOfDifficulty = levelOfDifficulty;
         this.preparationTime = preparationTime;
         this.description = description;
@@ -35,11 +39,17 @@ public class Recipe {
 
     @Override
     public String toString() {
+        List<Long> idList = new ArrayList<>();
+        for(Ingredient i : ingredientList) {
+            idList.add(i.getIngredientId());
+        }
         return "Recipe{" +
                 "recipeId=" + recipeId +
-                ", levelOfDifficulty=" + levelOfDifficulty +
+                ", levelOfDifficulty='" + levelOfDifficulty + '\'' +
                 ", preparationTime=" + preparationTime +
                 ", description='" + description + '\'' +
+                ", dish=" + dish +
+                ", ingredientIds=" + idList +
                 '}';
     }
 }

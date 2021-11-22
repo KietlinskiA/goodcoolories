@@ -1,12 +1,10 @@
 package pl.kietlinski.goodcoolories.Entity;
 
-import jdk.jfr.Unsigned;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 
 @Getter
 @Setter
@@ -49,6 +47,7 @@ public class Ingredient {
                 ", protein=" + protein +
                 ", fat=" + fat +
                 ", carbohydrates=" + carbohydrates +
+                ", recipeId=" + recipe.getRecipeId() +
                 '}';
     }
 }

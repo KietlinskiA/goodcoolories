@@ -26,6 +26,9 @@ public class Dish {
     @OneToOne
     private Recipe recipe;
 
+    @ManyToOne
+    private Diet diet;
+
     public Dish(String name, String description, String photo) {
         this.name = name;
         this.description = description;
@@ -39,7 +42,8 @@ public class Dish {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
-                ", recipe=" + recipe +
+                ", recipeId=" + recipe.getRecipeId() +
+                ", diet=" + diet.getDietId() +
                 '}';
     }
 }

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" xmlns:th="http://www.thymeleaf.org/" lang="pl">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Grill Bar, newest restaurant">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <link href="../img/diet_ico.png" rel="shortcut icon" type="image/x-icon"/>
+    <title>GoodCoolories - skorzystaj już teraz!</title>
+    <link rel="stylesheet" href="../css/client/showDish.css" media="screen">
+    <script class="u-script" type="text/javascript" src="//static.nicepage.com/shared/assets/jquery-1.9.1.min.js"
+            defer=""></script>
+    <script class="u-script" type="text/javascript"
+            src="//capp.nicepage.com/59b0f2028590c2124be8cde0fea4ef993a7aa7ad/nicepage.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Ubuntu:300,300i,400,400i,500,500i,700,700i">
+    <style class="u-style">
+        .u-section-2 .u-sheet-1 {
+            min-height: 680px;
+        }
+
+        .u-section-2 .u-shape-1 {
+            height: 582px;
+            width: 398px;
+            background-image: none;
+            margin: 60px auto 0 355px;
+        }
+
+        .u-section-2 .u-layout-wrap-1 {
+            margin: -582px auto 60px 0;
+        }
+
+        .u-section-2 .u-layout-cell-1 {
+            min-height: 224px;
+        }
+
+        .u-section-2 .u-container-layout-1 {
+            padding: 20px 0 20px 30px;
+        }
+
+        .u-section-2 .u-text-1 {
+            font-size: 4.5rem;
+            letter-spacing: normal;
+            font-weight: 700;
+            margin: 14px 0 0;
+        }
+
+        .u-section-2 .u-text-2 {
+            text-transform: none;
+            font-size: 3rem;
+            font-weight: 400;
+            font-family: Ubuntu, sans-serif;
+            margin: 0;
+        }
+
+        .u-section-2 .u-layout-cell-2 {
+            min-height: 358px;
+        }
+
+        .u-section-2 .u-container-layout-2 {
+            padding: 40px 0 30px 30px;
+        }
+
+        .u-section-2 .u-line-1 {
+            transform-origin: right center;
+            margin: 0 auto 0 0;
+        }
+
+        .u-section-2 .u-layout-cell-3 {
+            min-height: 358px;
+        }
+
+        .u-section-2 .u-container-layout-3 {
+            padding: 30px 50px 30px 30px;
+        }
+
+        .u-section-2 .u-text-3 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .u-section-2 .u-btn-1 {
+            border-style: solid;
+            background-image: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 25px auto 0 0;
+            padding: 10px 45px;
+        }
+
+        .u-section-2 .u-image-1 {
+            min-height: 564px;
+            background-image: url("//images03.nicepage.com/c461c07a441a5d220e8feb1a/8217bb7724ae54d0860101a7/ffe.jpg");
+            background-position: 50% 50%;
+        }
+
+        .u-section-2 .u-container-layout-4 {
+            padding: 20px;
+        }
+
+        @media (max-width: 1199px) {
+            .u-section-2 .u-sheet-1 {
+                min-height: 688px;
+            }
+
+            .u-section-2 .u-shape-1 {
+                height: 568px;
+                margin-right: 187px;
+                margin-left: auto;
+            }
+
+            .u-section-2 .u-layout-wrap-1 {
+                margin-top: -567px;
+                margin-right: initial;
+                margin-left: initial;
+            }
+
+            .u-section-2 .u-layout-cell-1 {
+                min-height: 185px;
+            }
+
+            .u-section-2 .u-layout-cell-2 {
+                min-height: 281px;
+            }
+
+            .u-section-2 .u-line-1 {
+                margin-right: initial;
+                margin-left: initial;
+            }
+
+            .u-section-2 .u-layout-cell-3 {
+                min-height: 303px;
+            }
+
+            .u-section-2 .u-container-layout-3 {
+                padding-right: 30px;
+            }
+
+            .u-section-2 .u-image-1 {
+                min-height: 465px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .u-section-2 .u-sheet-1 {
+                min-height: 1061px;
+            }
+
+            .u-section-2 .u-shape-1 {
+                height: 302px;
+                margin-top: 333px;
+                margin-right: initial;
+                margin-left: initial;
+                width: auto;
+            }
+
+            .u-section-2 .u-layout-wrap-1 {
+                margin-top: -575px;
+                margin-right: initial;
+                margin-left: initial;
+            }
+
+            .u-section-2 .u-layout-cell-1 {
+                min-height: 100px;
+            }
+
+            .u-section-2 .u-layout-cell-2 {
+                min-height: 404px;
+            }
+
+            .u-section-2 .u-container-layout-2 {
+                padding-top: 30px;
+                padding-right: 0;
+            }
+
+            .u-section-2 .u-layout-cell-3 {
+                min-height: 100px;
+            }
+
+            .u-section-2 .u-image-1 {
+                min-height: 763px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .u-section-2 .u-sheet-1 {
+                min-height: 1115px;
+            }
+
+            .u-section-2 .u-shape-1 {
+                height: 271px;
+                margin-top: 60px;
+                width: auto;
+                margin-right: initial;
+                margin-left: initial;
+            }
+
+            .u-section-2 .u-layout-wrap-1 {
+                margin-top: -582px;
+                margin-right: initial;
+                margin-left: initial;
+            }
+
+            .u-section-2 .u-container-layout-1 {
+                padding-left: 10px;
+            }
+
+            .u-section-2 .u-layout-cell-2 {
+                min-height: 909px;
+            }
+
+            .u-section-2 .u-container-layout-2 {
+                padding-left: 10px;
+            }
+
+            .u-section-2 .u-container-layout-3 {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+
+            .u-section-2 .u-image-1 {
+                min-height: 572px;
+            }
+
+            .u-section-2 .u-container-layout-4 {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .u-section-2 .u-sheet-1 {
+                min-height: 891px;
+            }
+
+            .u-section-2 .u-shape-1 {
+                height: 246px;
+                margin-top: 293px;
+                width: auto;
+                margin-right: initial;
+                margin-left: initial;
+            }
+
+            .u-section-2 .u-layout-wrap-1 {
+                margin-top: -509px;
+                margin-bottom: 30px;
+                margin-right: initial;
+                margin-left: initial;
+            }
+
+            .u-section-2 .u-text-1 {
+                font-size: 4.0625rem;
+            }
+
+            .u-section-2 .u-text-2 {
+                font-size: 2.25rem;
+            }
+
+            .u-section-2 .u-layout-cell-2 {
+                min-height: 572px;
+            }
+
+            .u-section-2 .u-image-1 {
+                min-height: 360px;
+            }
+        }</style>
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "",
+        "url": "https://website65732.nicepage.io/Page-3.html"
+    }</script>
+    <meta property="og:title" content="Page 3">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="https://website65732.nicepage.io/Page-3.html">
+    <meta property="og:url" content="https://website65732.nicepage.io/Page-3.html">
+
+</head>
+<body class="u-body">
+
+<section class="u-clearfix u-section-2" id="sec-107f">
+    <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-sm u-valign-middle-xl u-sheet-1">
+        <div class="u-align-left u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-left-0 u-opacity u-opacity-40 u-palette-5-base u-shape u-shape-1"></div>
+        <div class="u-clearfix u-expanded-width u-gutter-30 u-layout-spacing-vertical u-layout-wrap u-layout-wrap-1"
+             th:object="${dish}">
+            <div class="u-gutter-0 u-layout">
+                <div class="u-layout-row">
+                    <div class="u-size-32 u-size-60-md">
+                        <div class="u-layout-col">
+                            <div class="u-size-30">
+                                <div class="u-layout-row">
+                                    <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-60 u-layout-cell-1">
+                                        <div class="u-container-layout u-container-layout-1">
+                                            <h1 class="u-custom-font u-font-montserrat u-text u-text-1"
+                                                th:text="*{getName()}"></h1>
+                                            <h2 class="u-custom-font u-font-ubuntu u-text u-text-palette-5-dark-1 u-text-2"
+                                                th:text="'Czas przygotowania: '+*{getRecipe().getPreparationTime()}"></h2>
+                                            <h2 class="u-custom-font u-font-ubuntu u-text u-text-palette-5-dark-1 u-text-2"
+                                                th:text="'Poziom trudności: '+*{getRecipe().levelOfDifficulty}"></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="u-size-30">
+                                <div class="u-layout-row">
+                                    <div class="u-align-right u-container-style u-hidden-sm u-hidden-xs u-layout-cell u-left-cell u-size-20-lg u-size-20-md u-size-20-sm u-size-20-xs u-size-21-xl u-layout-cell-2">
+                                        <div class="u-container-layout u-valign-top u-container-layout-2">
+                                            <div class="u-border-1 u-border-grey-dark-1 u-expanded-width u-line u-line-horizontal u-line-1"></div>
+                                        </div>
+                                    </div>
+                                    <div class="u-container-style u-layout-cell u-size-39-xl u-size-40-lg u-size-40-md u-size-40-sm u-size-40-xs u-layout-cell-3">
+                                        <div class="u-container-layout u-valign-top u-container-layout-3">
+                                            <p class="u-text u-text-3" th:text="*{getRecipe().getDescription()}">
+                                                <br>
+                                                <br>
+                                            </p>
+                                            <a th:href="'/show-diet?token='+*{getDiet().getToken()}"
+                                               class="u-border-1 u-border-black u-btn u-btn-rectangle u-button-style u-radius-0 u-btn-1">Powrót</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="u-size-28 u-size-60-md">
+                        <div class="u-layout-col">
+                            <div class="u-align-center u-container-style u-image u-layout-cell u-right-cell u-size-60 u-image-1">
+                                <div class="u-container-layout u-container-layout-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
