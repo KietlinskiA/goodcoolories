@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,18 +19,18 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipe_id")
     private long recipeId;
-    @Column(name = "level_of_difficulty")
+    @Column(name = "level_of_difficulty", length = 6)
     private String levelOfDifficulty;
-    @Column(name = "preparation_time")
+    @Column(name = "preparation_time", nullable = false, columnDefinition = "Integer UNSIGNED", length = 3)
     private int preparationTime;
-    @Column(length = 1000)
+    @Column(length = 1000, scale = 100)
     private String description;
 
-    @OneToOne(mappedBy = "recipe")
+    @OneToOne
     private Dish dish;
 
     @OneToMany(mappedBy = "recipe")
-    private List<Ingredient> ingredientList;
+    private Set<Ingredient> ingredientSet;
 
     public Recipe(String levelOfDifficulty, int preparationTime, String description) {
         this.levelOfDifficulty = levelOfDifficulty;
@@ -39,17 +40,15 @@ public class Recipe {
 
     @Override
     public String toString() {
-        List<Long> idList = new ArrayList<>();
-        for(Ingredient i : ingredientList) {
-            idList.add(i.getIngredientId());
-        }
+        List<Long> ingredientIdList = new ArrayList<>();
+        ingredientSet.forEach(ingredient -> ingredientIdList.add(ingredient.getIngredientId()));
         return "Recipe{" +
                 "recipeId=" + recipeId +
                 ", levelOfDifficulty='" + levelOfDifficulty + '\'' +
                 ", preparationTime=" + preparationTime +
                 ", description='" + description + '\'' +
                 ", dish=" + dish +
-                ", ingredientIds=" + idList +
+                ", ingredientIds=" + ingredientIdList +
                 '}';
     }
 }

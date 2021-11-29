@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,34 +19,32 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dish_id")
     private long dishId;
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String name;
-    @Column(length = 1000, nullable = false)
-    private String description;
-    @Column(length = 100)
+    @Column(length = 500)
     private String photo;
 
-    @OneToOne
+    @ManyToMany(mappedBy = "dishSet")
+    private Set<Diet> dietSet;
+
+    @OneToOne(mappedBy = "dish")
     private Recipe recipe;
 
-    @ManyToOne
-    private Diet diet;
-
-    public Dish(String name, String description, String photo) {
+    public Dish(String name, String photo) {
         this.name = name;
-        this.description = description;
         this.photo = photo;
     }
 
     @Override
     public String toString() {
+        List<Long> dishIds = new ArrayList<>();
+        dietSet.forEach(diet -> dishIds.add(diet.getDietId()));
         return "Dish{" +
                 "dishId=" + dishId +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
                 ", recipeId=" + recipe.getRecipeId() +
-                ", diet=" + diet.getDietId() +
+                ", diets=" + dishIds +
                 '}';
     }
 }

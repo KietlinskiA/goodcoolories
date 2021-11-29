@@ -20,7 +20,7 @@ public class Order {
     private String name;
     @Column(length = 50, nullable = false)
     private String eaddress;
-    @Column(length = 9, nullable = false)
+    @Column(length = 9, nullable = false, unique = true)
     private String phone;
     @Column(length = 100, nullable = false)
     private String street;

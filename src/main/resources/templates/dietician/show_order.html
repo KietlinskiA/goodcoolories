@@ -121,7 +121,7 @@
                 <div class="order-mid-col">
                     <p>Lista posiłków:</p>
                     <br/>
-                    <div th:each="dish : ${order.getDiet().getDishList()}" th:object="${dish}">
+                    <div th:each="dish : ${order.getDiet().getDishSet()}" th:object="${dish}">
                         <p>
                             <a class="button-p" methods="delete"
                                th:href="'/admin/delete-dish-from-diet?activeToken='+${activeToken}+'&dietId='+${order.getDiet().getDietId()}+'&dishId='+*{getDishId()}">X</a>

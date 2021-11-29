@@ -71,15 +71,15 @@ public class DieticianController {
         return "redirect:/admin/show-order?orderId="+diet.getOrder().getOrderId();
     }
 
-    @RequestMapping("/add-dish-to-diet")
-    public String addDishToDiet(@RequestParam long dishId, @RequestParam long dietId, Model model) {
-        Dish dish = dieticianService.getDishRepository().getById(dishId);
-        Diet diet = dieticianService.getDietRepository().getById(dietId);
-        dish.setDiet(diet);
-        dieticianService.getDishRepository().save(dish);
-        Order order = diet.getOrder();
-        return "redirect:/admin/show-order?orderId="+ order.getOrderId();
-    }
+//    @RequestMapping("/add-dish-to-diet")
+//    public String addDishToDiet(@RequestParam long dishId, @RequestParam long dietId, Model model) {
+//        Dish dish = dieticianService.getDishRepository().getById(dishId);
+//        Diet diet = dieticianService.getDietRepository().getById(dietId);
+//        dish.setDiet(diet);
+//        dieticianService.getDishRepository().save(dish);
+//        Order order = diet.getOrder();
+//        return "redirect:/admin/show-order?orderId="+ order.getOrderId();
+//    }
 
     @GetMapping("/panel")
     public ModelAndView showPanel(@RequestParam int activeToken) {

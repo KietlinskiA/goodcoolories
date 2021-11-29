@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,14 +19,14 @@ public class Diet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "diet_id")
     private long dietId;
-    @Column(length = 1000)
+    @Column(length = 3, scale = 999)
     private String token;
 
     @OneToOne(mappedBy = "diet")
     private Order order;
 
-    @OneToMany(mappedBy = "diet")
-    private List<Dish> dishList;
+    @ManyToMany
+    private Set<Dish> dishSet;
 
     public Diet(String token) {
         this.token = token;
@@ -34,7 +35,7 @@ public class Diet {
     @Override
     public String toString() {
         List<Long> idList = new ArrayList<>();
-        for(Dish d : dishList) {
+        for (Dish d : dishSet) {
             idList.add(d.getDishId());
         }
         return "Diet{" +
