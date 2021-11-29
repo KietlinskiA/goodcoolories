@@ -18,24 +18,17 @@ public class Ingredient {
     private long ingredientId;
     @Column(length = 100, nullable = false)
     private String name;
-    @Column(length = 500, nullable = false)
-    private int kcal;
-    @Column(scale = 100, nullable = false)
-    private double protein;
-    @Column(scale = 100, nullable = false)
-    private double fat;
-    @Column(scale = 100, nullable = false)
-    private double carbohydrates;
+    @Column(columnDefinition = "Float UNSIGNED", nullable = false)
+    private double proportions;
 
+    @ManyToOne
+    private IngredientInfo ingredientInfo;
     @ManyToOne
     private Recipe recipe;
 
-    public Ingredient(String name, int kcal, double protein, double fat, double carbohydrates) {
+    public Ingredient(String name, double proportions) {
         this.name = name;
-        this.kcal = kcal;
-        this.protein = protein;
-        this.fat = fat;
-        this.carbohydrates = carbohydrates;
+        this.proportions = proportions;
     }
 
     @Override
@@ -43,11 +36,9 @@ public class Ingredient {
         return "Ingredient{" +
                 "ingredientId=" + ingredientId +
                 ", name='" + name + '\'' +
-                ", kcal=" + kcal +
-                ", protein=" + protein +
-                ", fat=" + fat +
-                ", carbohydrates=" + carbohydrates +
-                ", recipeId=" + recipe.getRecipeId() +
+                ", proportions=" + proportions +
+                ", ingredientInfo=" + ingredientInfo +
+                ", recipe=" + recipe +
                 '}';
     }
 }
