@@ -32,7 +32,7 @@ public class ClientService {
         this.orderRepository = orderRepository;
         this.dietRepository = dietRepository;
         this.errorToken = "";
-        initDatabase();
+//        initDatabase();
     }
 
     public void initDatabase() {

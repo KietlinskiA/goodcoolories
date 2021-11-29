@@ -131,10 +131,11 @@
                     </div>
                 </div>
                 <div class="order-right-col">
-                    <form th:action="'/add-dish-to-diet?orderId='+${order.getOrderId()}">
+                    <form action="/admin/add-dish-to-diet">
+                        <input name="orderId" type="number" th:value="${order.getOrderId()}" hidden>
                         <p>Dodaj posiłek:</p>
                         <br/>
-                        <select name="dishToAdd"
+                        <select name="dishIdToAdd"
                                 style="width: 440px; height: 40px; font-size: 15px; margin: 0 0 20px 15px;" required>
                             <option value="" disabled></option>
                             <option th:each="dish : ${dishList}" th:text="${dish.getName()}"

@@ -16,6 +16,8 @@ import pl.kietlinski.goodcoolories.dietician.Service.DieticianService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/admin")
@@ -66,20 +68,21 @@ public class DieticianController {
     @RequestMapping("/delete-dish-from-diet")
     public String deleteDishFromDiet(@RequestParam long dishId, @RequestParam long dietId) {
         Dish dish = dieticianService.getDishRepository().getById(dishId);
-        dieticianService.getDishRepository().delete(dish);
         Diet diet = dieticianService.getDietRepository().getById(dietId);
+        diet.getDishSet().remove(dish);
+        dieticianService.getDietRepository().save(diet);
         return "redirect:/admin/show-order?orderId="+diet.getOrder().getOrderId();
     }
 
-//    @RequestMapping("/add-dish-to-diet")
-//    public String addDishToDiet(@RequestParam long dishId, @RequestParam long dietId, Model model) {
-//        Dish dish = dieticianService.getDishRepository().getById(dishId);
-//        Diet diet = dieticianService.getDietRepository().getById(dietId);
-//        dish.setDiet(diet);
-//        dieticianService.getDishRepository().save(dish);
-//        Order order = diet.getOrder();
-//        return "redirect:/admin/show-order?orderId="+ order.getOrderId();
-//    }
+    @RequestMapping("/add-dish-to-diet")
+    public String addDishToDiet(@RequestParam long orderId, @RequestParam long dishIdToAdd) {
+        Order order = dieticianService.getOrderRepository().getById(orderId);
+        Dish dish = dieticianService.getDishRepository().getById(dishIdToAdd);
+        Diet diet = order.getDiet();
+        diet.getDishSet().add(dish);
+        dieticianService.getDietRepository().save(diet);
+        return "redirect:/admin/show-order?orderId=" + orderId;
+    }
 
     @GetMapping("/panel")
     public ModelAndView showPanel(@RequestParam int activeToken) {
