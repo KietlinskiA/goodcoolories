@@ -30,7 +30,7 @@ public class Recipe {
     private Dish dish;
 
     @OneToMany(mappedBy = "recipe")
-    private Set<Ingredient> ingredientSet;
+    private Set<IngredientRecipe> ingredientRecipeSet;
 
     public Recipe(String levelOfDifficulty, int preparationTime, String description) {
         this.levelOfDifficulty = levelOfDifficulty;
@@ -41,7 +41,7 @@ public class Recipe {
     @Override
     public String toString() {
         List<Long> ingredientIdList = new ArrayList<>();
-        ingredientSet.forEach(ingredient -> ingredientIdList.add(ingredient.getIngredientId()));
+        ingredientRecipeSet.forEach(ingredientRecipe -> ingredientIdList.add(ingredientRecipe.getIngredientRecipeId()));
         return "Recipe{" +
                 "recipeId=" + recipeId +
                 ", levelOfDifficulty='" + levelOfDifficulty + '\'' +

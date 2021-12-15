@@ -6,7 +6,7 @@
     <meta name="keywords" content="Grill Bar, newest restaurant">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <link href="../img/diet_ico.png" rel="shortcut icon" type="image/x-icon"/>
+    <link href="../img/diet_ico_white.png" rel="shortcut icon" type="image/x-icon"/>
     <title>GoodCoolories - skorzystaj już teraz!</title>
     <link rel="stylesheet" href="../css/client/showDish.css" media="screen">
     <script class="u-script" type="text/javascript" src="//static.nicepage.com/shared/assets/jquery-1.9.1.min.js"
@@ -319,7 +319,7 @@
                                                 <br>
                                                 <br>
                                             </p>
-                                            <a th:href="'/show-diet?token='+*{getDiet().getToken()}"
+                                            <a th:href="'/show-diet?token=111'"
                                                class="u-border-1 u-border-black u-btn u-btn-rectangle u-button-style u-radius-0 u-btn-1">Powrót</a>
                                         </div>
                                     </div>
@@ -329,7 +329,7 @@
                     </div>
                     <div class="u-size-28 u-size-60-md">
                         <div class="u-layout-col">
-                            <div class="u-align-center u-container-style u-image u-layout-cell u-right-cell u-size-60 u-image-1">
+                            <div class="u-align-center u-container-style u-image u-layout-cell u-right-cell u-size-60 u-image-1" th:style="'background-image: url('+*{getPhoto()+')'}">
                                 <div class="u-container-layout u-container-layout-4"></div>
                             </div>
                         </div>

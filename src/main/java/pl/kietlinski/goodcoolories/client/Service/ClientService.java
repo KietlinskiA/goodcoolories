@@ -14,8 +14,8 @@ import java.util.Set;
 public class ClientService {
 
     private RecipeRepository recipeRepository;
+    private IngredientRecipeRepository ingredientRecipeRepository;
     private IngredientRepository ingredientRepository;
-    private IngredientInfoRepository ingredientInfoRepository;
     private DishRepository dishRepository;
     private OrderRepository orderRepository;
     private DietRepository dietRepository;
@@ -24,27 +24,63 @@ public class ClientService {
     private Diet foundDiet;
 
     @Autowired
-    public ClientService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, IngredientInfoRepository ingredientInfoRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
+    public ClientService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
         this.recipeRepository = recipeRepository;
+        this.ingredientRecipeRepository = ingredientRecipeRepository;
         this.ingredientRepository = ingredientRepository;
-        this.ingredientInfoRepository = ingredientInfoRepository;
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.dietRepository = dietRepository;
         this.errorToken = "";
-//        initDatabase();
+        initDatabase();
     }
 
     public void initDatabase() {
-        Order order1 = new Order("Jan Kowal", "j.k@wp.pl", "111111111", "Kowalska 1",
-                "11-111", "Kowalów", 25, 187, "male", "low", "up", 5,
-                "Nie lubie salaty i pomidora");
-        Order order2 = new Order("Ala Lis", "a.l@wp.pl", "222222222", "Lisia 2",
-                "22-222", "Lisów", 45, 162, "female", "medium", "keep", 4,
-                "Nie lubie twarogu i ryżu");
-        Order order3 = new Order("Kamil Ul", "k.u@wp.pl", "333333333", "Ulowa 3",
-                "33-333", "Ulów", 18, 173, "male", "high", "down", 5,
-                "Nie lubie makaronu i sera żółtego");
+        Order order1 = new OrderBuilder()
+                .setName("Jan Kowal")
+                .setEaddress("j.k@wp.pl")
+                .setPhone("111111111")
+                .setStreet("Kowalska 1")
+                .setZip("11-111")
+                .setCity("Kowalów")
+                .setAge(25)
+                .setHeight(187)
+                .setSex("male")
+                .setActivity("low")
+                .setDietWish("up")
+                .setDishCount(5)
+                .setComment("Nie lubie salaty i pomidora")
+                .createOrder();
+        Order order2 = new OrderBuilder()
+                .setName("Ala Lis")
+                .setEaddress("a.l@wp.pl")
+                .setPhone("222222222")
+                .setStreet("Lisia 2")
+                .setZip("22-222")
+                .setCity("Lisów")
+                .setAge(45)
+                .setHeight(162)
+                .setSex("female")
+                .setActivity("medium")
+                .setDietWish("keep")
+                .setDishCount(4)
+                .setComment("Nie lubie twarogu i ryżu")
+                .createOrder();
+        Order order3 = new OrderBuilder()
+                .setName("Kamil Ul")
+                .setEaddress("k.u@wp.pl")
+                .setPhone("333333333")
+                .setStreet("Ulowa 3")
+                .setZip("33-333")
+                .setCity("Ulów")
+                .setAge(18)
+                .setHeight(173)
+                .setSex("male")
+                .setActivity("high")
+                .setDietWish("down")
+                .setDishCount(5)
+                .setComment("Nie lubie makaronu i sera żółtego")
+                .createOrder();
 
         Diet diet1 = new Diet("111");
         Diet diet2 = new Diet("222");
@@ -55,63 +91,101 @@ public class ClientService {
         order2.setDiet(diet2);
         order3.setDiet(diet3);
 
-        Dish dish1 = new Dish("Sałatka", "http:\\salatka");
-        Dish dish2 = new Dish("Makaron", "http:\\makaron");
-        Dish dish3 = new Dish("Ryba", "http:\\ryba");
+        Dish dish1 = new Dish("Sałatka z tuńczykiem", "https://cdn.aniagotuje.com/pictures/articles/2021/10/20278230-v-1500x1500.jpg");
+        Dish dish2 = new Dish("Makaron z piersią z kurczaka", "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/makaron_z_kurczakiem_szpinakiem_w_sosie_curry_01.jpg");
+        Dish dish3 = new Dish("Filet z Dorsza z ziemniakami i surówką", "http:\\ryba");
+        Dish dish4 = new Dish("Pierogi ruskie", "http:\\ryba");
+        Dish dish5 = new Dish("Zupa meksykańska", "https://d3iamf8ydd24h9.cloudfront.net/pictures/articles/2019/09/1237586-v-1500x1500.jpg");
+        Dish dish6 = new Dish("Zupa pomidorowa z grzankami", "http:\\ryba");
+        Dish dish7 = new Dish("Szaszłyk wieprzowy z warzywami", "http:\\ryba");
+        Dish dish8 = new Dish("Płatki owsiane z orzechami", "http:\\ryba");
+        Dish dish9 = new Dish("Kasza manna z dżemem malinowym", "https://cdn.aniagotuje.com/pictures/articles/2019/11/1490094-v-720x935.jpg");
+        Dish dish10 = new Dish("Kanapki z twarożkiem i szczypiorkiem", "http:\\ryba");
 
-        diet1.setDishSet(Set.of(dish1));
+        diet1.setDishSet(Set.of(dish9, dish1, dish2, dish5));
         diet2.setDishSet(Set.of(dish2));
         diet3.setDishSet(Set.of(dish3));
 
         dish1.setDietSet(Set.of(diet1));
-        dish2.setDietSet(Set.of(diet2));
+        dish2.setDietSet(Set.of(diet1, diet2));
         dish3.setDietSet(Set.of(diet3));
+        dish5.setDietSet(Set.of(diet1));
+        dish9.setDietSet(Set.of(diet1));
 
-        Recipe recipe1 = new Recipe("łatwy", 20, "Przepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatkePrzepis na salatke");
-        Recipe recipe2 = new Recipe("trudny", 30, "Przepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaronPrzepis na makaron");
+        Recipe recipe1 = new Recipe("łatwy", 35,
+        "Ryż ugotować w osolonej wodzie. (Ryż powinien być ugotowany na sypko, nie rozgotowany). Następnie dobrze odcedzić na sitku i pozostawić do ostygnięcia.\n" +
+                "Jajka ugotować na twardo, ostudzić, obrać ze skorupek i pokroić w kostkę.\n" +
+                "Tuńczyka i kukurydzę odsączyć.\n" +
+                "Ryż przełożyć do miski. Dodać odsączonego tuńczyka, kukurydzę i jajka. Dodać posiekaną zieloną cebulkę lub szczypiorek i majonezu do smaku (ok. 4 łyżek). Doprawić solą i pieprzem.\n" +
+                "Sałatkę można podawać od razu. Można ją również schłodzić w lodówce.");
+        Recipe recipe2 = new Recipe("trudny", 40,
+                "Ugotować makaron w osolonej wodzie. Na większej patelni na oliwie poddusić pokrojoną w kosteczkę cebulę, dodać pokrojoną w kosteczkę pierś kurczaka i obsmażyć na większym ogniu.\n" +
+                        "Pod koniec dodać starty czosnek, doprawić solą, pieprzem, oregano oraz chili.\n" +
+                        "Doprawić solą, pieprzem oraz łyżeczką cukru. Gotować na średnim ogniu przez ok. 10 minut.\n" +
+                        "Dodać śmietankę oraz kilka posiekanych liści bazylii, wymieszać i zagotować delikatnie mieszając. Podawać z makaronem. Można posypać parmezanem, ale niekoniecznie.");
         Recipe recipe3 = new Recipe("łatwy", 10, "Przepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybe");
+        Recipe recipe4 = new Recipe("łatwy", 10, "Przepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybe");
+        Recipe recipe5 = new Recipe("średni", 60,
+                "W szerokim garnku na łyżce oliwy zeszklić pokrojoną w kostkę cebulę, w międzyczasie dodać starte ząbki czosnku. Przesunąć na bok, wlać drugą łyżkę oliwy i mieszając podsmażyć mielone mięso. Wsypać przyprawy i dokładnie wymieszać.\n" +
+                        "Dodać pokrojoną w półplasterki marchewkę oraz szklankę gorącego bulionu. Przykryć i dusić na małym ogniu 20 min.\n" +
+                        "Doprawić solą, pieprzem i szczyptą cukru. Wymieszać i gotować bez przykrycia 5 min.\n" +
+                        "Dodać resztę gorącego bulionu oraz odcedzoną kukurydzę i fasolę z puszki. Gotować na małym ogniu z lekko uchyloną pokrywką ok. 25 minut.");
+        Recipe recipe6 = new Recipe("łatwy", 10, "Przepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybe");
+        Recipe recipe7 = new Recipe("łatwy", 10, "Przepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybe");
+        Recipe recipe8 = new Recipe("łatwy", 10, "Przepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybe");
+        Recipe recipe9 = new Recipe("łatwy", 10,
+                "Z 300 ml mleka odlać do szklanki około 100 ml, wymieszać z kaszą manną. Pozostałe mleko " +
+                        "zagotować dodając cukier i cukier waniliowy. Gdy mleko się zagotuje dolać część mleka " +
+                        "wymieszaną z kaszą i gotować na małym ogniu często mieszając. Kasza stopniowo będzie gęstnieć, " +
+                        "po około 5-10 minutach powinna uzyskać odpowiednią konsystencję. Nałożyć do miseczki, przybrać " +
+                        "dżemem malinowym.");
+        Recipe recipe10 = new Recipe("łatwy", 10, "Przepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybe");
 
         recipe1.setDish(dish1);
         recipe2.setDish(dish2);
         recipe3.setDish(dish3);
+        recipe4.setDish(dish4);
+        recipe5.setDish(dish5);
+        recipe6.setDish(dish6);
+        recipe7.setDish(dish7);
+        recipe8.setDish(dish8);
+        recipe9.setDish(dish9);
+        recipe10.setDish(dish10);
 
-        Ingredient ingredient1 = new Ingredient("Pomidor",0.9);
-        Ingredient ingredient2 = new Ingredient("Makaron",1.5);
-        Ingredient ingredient3 = new Ingredient("Ogórek",2.7);
-        Ingredient ingredient4 = new Ingredient("Pomidor",0.9);
-        Ingredient ingredient5 = new Ingredient("Makaron",1.5);
-        Ingredient ingredient6 = new Ingredient("Ogórek",2.7);
-        Ingredient ingredient7 = new Ingredient("Pomidor",0.9);
-        Ingredient ingredient8 = new Ingredient("Makaron",1.5);
-        Ingredient ingredient9 = new Ingredient("Ogórek",2.7);
+        // Tylko kasza manna
+        IngredientRecipe ingredientRecipe1 = new IngredientRecipe(3);
+        IngredientRecipe ingredientRecipe2 = new IngredientRecipe(0.375);
+        IngredientRecipe ingredientRecipe3 = new IngredientRecipe(0.375);
+        IngredientRecipe ingredientRecipe4 = new IngredientRecipe(0.5);
 
-        IngredientInfo ingredientInfo1 = new IngredientInfo( 200, 20, 20, 20);
-        IngredientInfo ingredientInfo2 = new IngredientInfo( 300, 30, 30, 30);
-        IngredientInfo ingredientInfo3 = new IngredientInfo( 100, 10, 10, 10);
+        // Tylko kasza manna
+        Ingredient ingredient1 = new Ingredient("Mleko", 40, 3.4, 0.5, 5);
+        Ingredient ingredient2 = new Ingredient("Kasza manna", 359, 13, 1.1, 73);
+        Ingredient ingredient3 = new Ingredient("Cukier", 386, 0, 0, 100);
+        Ingredient ingredient4 = new Ingredient("Dżem malinowy", 139, 1, 0, 33);
+//        Ingredient ingredient5 = new Ingredient("Ryż", 130, 2.7, 0.3, 28);
+//        Ingredient ingredient6 = new Ingredient("Tuńczyk", 131, 10, 10, 10);
 
-        ingredient1.setIngredientInfo(ingredientInfo1);
-        ingredient2.setIngredientInfo(ingredientInfo2);
-        ingredient3.setIngredientInfo(ingredientInfo3);
-        ingredient4.setIngredientInfo(ingredientInfo1);
-        ingredient5.setIngredientInfo(ingredientInfo2);
-        ingredient6.setIngredientInfo(ingredientInfo3);
-        ingredient7.setIngredientInfo(ingredientInfo1);
-        ingredient8.setIngredientInfo(ingredientInfo2);
-        ingredient9.setIngredientInfo(ingredientInfo3);
-
-        ingredient1.setRecipe(recipe1);
-        ingredient2.setRecipe(recipe1);
-        ingredient3.setRecipe(recipe1);
-        ingredient4.setRecipe(recipe2);
-        ingredient5.setRecipe(recipe2);
-        ingredient6.setRecipe(recipe2);
-        ingredient7.setRecipe(recipe3);
-        ingredient8.setRecipe(recipe3);
-        ingredient9.setRecipe(recipe3);
+        // Kasza manna
+        ingredientRecipe1.setRecipe(recipe9);
+        ingredientRecipe1.setIngredient(ingredient1);
+        ingredientRecipe2.setRecipe(recipe9);
+        ingredientRecipe2.setIngredient(ingredient2);
+        ingredientRecipe3.setRecipe(recipe9);
+        ingredientRecipe3.setIngredient(ingredient3);
+        ingredientRecipe4.setRecipe(recipe9);
+        ingredientRecipe4.setIngredient(ingredient4);
 
         dishRepository.save(dish1);
         dishRepository.save(dish2);
         dishRepository.save(dish3);
+        dishRepository.save(dish4);
+        dishRepository.save(dish5);
+        dishRepository.save(dish6);
+        dishRepository.save(dish7);
+        dishRepository.save(dish8);
+        dishRepository.save(dish9);
+        dishRepository.save(dish10);
 
         dietRepository.save(diet1);
         dietRepository.save(diet2);
@@ -121,23 +195,25 @@ public class ClientService {
         orderRepository.save(order2);
         orderRepository.save(order3);
 
-        ingredientInfoRepository.save(ingredientInfo1);
-        ingredientInfoRepository.save(ingredientInfo2);
-        ingredientInfoRepository.save(ingredientInfo3);
-
-        recipeRepository.save(recipe1);
-        recipeRepository.save(recipe2);
-        recipeRepository.save(recipe3);
-
         ingredientRepository.save(ingredient1);
         ingredientRepository.save(ingredient2);
         ingredientRepository.save(ingredient3);
         ingredientRepository.save(ingredient4);
-        ingredientRepository.save(ingredient5);
-        ingredientRepository.save(ingredient6);
-        ingredientRepository.save(ingredient7);
-        ingredientRepository.save(ingredient8);
-        ingredientRepository.save(ingredient9);
 
+        recipeRepository.save(recipe1);
+        recipeRepository.save(recipe2);
+        recipeRepository.save(recipe3);
+        recipeRepository.save(recipe4);
+        recipeRepository.save(recipe5);
+        recipeRepository.save(recipe6);
+        recipeRepository.save(recipe7);
+        recipeRepository.save(recipe8);
+        recipeRepository.save(recipe9);
+        recipeRepository.save(recipe10);
+
+        ingredientRecipeRepository.save(ingredientRecipe1);
+        ingredientRecipeRepository.save(ingredientRecipe2);
+        ingredientRecipeRepository.save(ingredientRecipe3);
+        ingredientRecipeRepository.save(ingredientRecipe4);
     }
 }

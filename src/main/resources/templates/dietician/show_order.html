@@ -125,7 +125,7 @@
                         <p>
                             <a class="button-p" methods="delete"
                                th:href="'/admin/delete-dish-from-diet?activeToken='+${activeToken}+'&dietId='+${order.getDiet().getDietId()}+'&dishId='+*{getDishId()}">X</a>
-                            <span th:text="*{getName}" style="margin-left: 10px"></span>
+                            <span th:text="*{getName()}" style="margin-left: 10px; word-break: break-word;"></span>
                         </p>
                         <br/>
                     </div>
