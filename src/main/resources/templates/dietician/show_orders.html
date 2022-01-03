@@ -61,9 +61,7 @@
 <body>
 <section id="container">
     <header class="header black-bg">
-        <!--logo start-->
         <a href="/admin/orders" class="logo"><b>Good<span>COOLories</span></b></a>
-        <!--logo end-->
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
                 <li><a class="logout" href="/admin/logout">Logout</a></li>
@@ -75,13 +73,13 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
                 <li class="mt">
-                    <a class="active" th:href="'/admin/orders?activeToken='+${activeToken}">
+                    <a class="active" th:href="@{/admin/orders}">
                         <i class="fa fa-money"></i>
                         <span>Zamówienia</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a th:href="'/admin/panel?activeToken='+${activeToken}">
+                    <a th:href="@{/admin/recipes}">
                         <i class="fa fa-sticky-note-o"></i>
                         <span>Przepisy</span>
                     </a>

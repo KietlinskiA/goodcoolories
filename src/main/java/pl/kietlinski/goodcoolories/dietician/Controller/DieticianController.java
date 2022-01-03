@@ -3,10 +3,7 @@ package pl.kietlinski.goodcoolories.dietician.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.kietlinski.goodcoolories.Entity.Diet;
 import pl.kietlinski.goodcoolories.Entity.Dish;
@@ -30,6 +27,11 @@ public class DieticianController {
         this.dieticianService = dieticianService;
     }
 
+    @GetMapping
+    public String get() {
+        return "redirect:admin/login";
+    }
+
     @GetMapping("/login")
     public ModelAndView login() {
         return new ModelAndView("dietician/login", "error", dieticianService.getError());
@@ -37,22 +39,14 @@ public class DieticianController {
 
     @GetMapping("/logout")
     public String logout() {
-        dieticianService.setActiveToken(0);
         return "redirect:/admin/login";
     }
 
     @GetMapping("/orders")
-    public ModelAndView showOrders(@RequestParam int activeToken, Model model) {
-        if (activeToken == dieticianService.getDietician().getToken()) {
-            dieticianService.setActiveToken(activeToken);
-            dieticianService.setError("");
-            model.addAttribute("orderList", dieticianService.getOrderRepository().findAll());
-            model.addAttribute("activeToken", activeToken);
-            return new ModelAndView("dietician/show_orders");
-        } else {
-            dieticianService.setError("Błędne dane");
-            return new ModelAndView("redirect:/admin/login");
-        }
+    public ModelAndView showOrders(Model model) {
+        dieticianService.setError("");
+        model.addAttribute("orderList", dieticianService.getOrderRepository().findAll());
+        return new ModelAndView("dietician/show_orders");
     }
 
     @GetMapping("/show-order")
@@ -71,7 +65,7 @@ public class DieticianController {
         Diet diet = dieticianService.getDietRepository().getById(dietId);
         diet.getDishSet().remove(dish);
         dieticianService.getDietRepository().save(diet);
-        return "redirect:/admin/show-order?orderId="+diet.getOrder().getOrderId();
+        return "redirect:/admin/show-order?orderId=" + diet.getOrder().getOrderId();
     }
 
     @RequestMapping("/add-dish-to-diet")
@@ -84,14 +78,22 @@ public class DieticianController {
         return "redirect:/admin/show-order?orderId=" + orderId;
     }
 
-    @GetMapping("/panel")
-    public ModelAndView showPanel(@RequestParam int activeToken) {
-        if (activeToken == dieticianService.getActiveToken()) {
-            return new ModelAndView("dietician/index", "activeToken", activeToken);
-        } else {
-            return new ModelAndView("redirect:/admin/login");
-        }
+    @GetMapping("/recipes")
+    public ModelAndView showRecipes() {
+        return new ModelAndView("dietician/recipes", "newDish", new Dish());
     }
+
+    @GetMapping("/form")
+    public String form() {
+        return "dietician/form";
+    }
+
+    @RequestMapping("/add-dish-to-base")
+    public String addDishToBase(@RequestBody Dish dish) {
+        dieticianService.getDishRepository().save(dish);
+        return "redirect:/admin/recipes";
+    }
+
 
 
 }

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Panel administracyjny dietetyka</title>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../lib/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="../../css/dietician/style.css" rel="stylesheet">
+    <style>
+        .testbox div, .testbox form, .testbox input, .testbox select, .testbox textarea, .testbox p {
+            width: 500px;
+            padding: 0;
+            margin: 0 auto;
+            outline: none;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+        .testbox h1 {
+            position: absolute;
+            margin: 0;
+            font-size: 32px;
+            color: #fff;
+            z-index: 2;
+        }
+        .testbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: inherit;
+            padding: 20px;
+        }
+        .testbox form {
+            width: auto;
+            padding: 20px;
+            border-radius: 6px;
+            background: #fff;
+            box-shadow: 0 0 10px 0 #cc0052;
+        }
+        .testbox .banner {
+            position: relative;
+            height: 210px;
+            background-image: url("../img/banner.jpg");
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .testbox .banner::after {
+            content: "";
+            background-color: rgba(0, 0, 0, 0.4);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .testbox input, .testbox textarea, .testbox select  {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .testbox input {
+            width: 100%;
+            padding: 5px;
+        }
+        .testbox select {
+            width: 100%;
+            padding: 7px 0;
+            background: transparent;
+        }
+        .testbox textarea {
+            width: 100%;
+            padding: 5px;
+            resize: none;
+        }
+        .testbox .item:hover p, .testbox input:hover::placeholder {
+            color: #cc0052;
+        }
+        .testbox .item input:hover, .testbox .item select:hover, .testbox .item textarea:hover {
+            border: 1px solid transparent;
+            box-shadow: 0 0 6px 0 #cc0052;
+            color: #cc0052;
+        }
+        .testbox .item {
+            position: relative;
+        }
+        .testbox .btn-block {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .testbox button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #cc0052;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .testbox button:hover {
+            background: #ff0066;
+        }
+    </style>
+</head>
+<body>
+<section id="container">
+    <header class="header black-bg">
+        <a href="/admin/orders" class="logo"><b>Good<span>COOLories</span></b></a>
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li><a class="logout" href="/admin/logout">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li class="mt">
+                    <a th:href="@{/admin/orders}">
+                        <i class="fa fa-money"></i>
+                        <span>Zamówienia</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a class="active" th:href="@{/admin/recipes}">
+                        <i class="fa fa-sticky-note-o"></i>
+                        <span>Przepisy</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="main-container">
+                <div class="testbox">
+                    <form action="/">
+                        <div class="banner">
+                            <h1>Dodaj swój przepis</h1>
+                        </div>
+                        <div class="item">
+                            <br/>
+                            <p>Nazwa</p>
+                            <input type="text" name="name" maxlength="100" required/>
+                        </div>
+                        <div class="item">
+                            <p>Photo</p>
+                            <input type="text" name="photo" maxlength="500" required/>
+                        </div>
+                        <div class="item">
+                            <p>Krótki opis potrawy</p>
+                            <textarea name="description" rows="3" maxlength="1000" required></textarea>
+                        </div>
+                        <div class="contact-item">
+                            <div class="item">
+                                <p>Poziom trudności</p>
+                                <select name="levelOfDifficulty" required>
+                                    <option value=""></option>
+                                    <option value="łatwy">Łatwy</option>
+                                    <option value="średni">Średni</option>
+                                    <option value="trudny">Trudny</option>
+                                </select>
+                            </div>
+                            <div class="item">
+                                <p>Czas przygotowania</p>
+                                <input type="number" name="preparationTime" value="5" min="5" max="90" step="1"/>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <p>Opis przygotowania</p>
+                            <textarea name="description" rows="6" maxlength="1000" required></textarea>
+                        </div>
+
+<!--                        <div class="contact-item" style="height: 66px">-->
+<!--                            <div class="item" style="float:left; width: 45%;">-->
+<!--                                <p>Dodaj składnik</p>-->
+<!--                                <select>-->
+<!--                                    <option value=""></option>-->
+<!--                                    <option value="1">Makaron</option>-->
+<!--                                    <option value="2">Ryż</option>-->
+<!--                                    <option value="3">Pomidor</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="item" style="float:right; width: 45%;">-->
+<!--                                <p>Proporcja</p>-->
+<!--                                <input type="number" name="proportion" value="1.0" min="0.1" max="100.0" step="0.1" />-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="item">-->
+<!--                            <p>Dodane składniki:</p>-->
+<!--                            <span name="photo">X Rzodkiewka</span>-->
+<!--                        </div>-->
+
+                        <div class="btn-block">
+                            <button type="submit" href="/">DALEJ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+        <div class="text-center">
+            <p style="color:#fff">
+                GoodCOOLories
+            </p>
+        </div>
+    </footer>
+    <!--footer end-->
+</section>
+</body>
+
+</html>

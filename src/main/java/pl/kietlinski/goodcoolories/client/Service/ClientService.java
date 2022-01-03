@@ -139,7 +139,7 @@ public class ClientService {
                         "wymieszaną z kaszą i gotować na małym ogniu często mieszając. Kasza stopniowo będzie gęstnieć, " +
                         "po około 5-10 minutach powinna uzyskać odpowiednią konsystencję. Nałożyć do miseczki, przybrać " +
                         "dżemem malinowym.");
-        Recipe recipe10 = new Recipe("łatwy", 10, "Przepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybePrzepis na rybe");
+        Recipe recipe10 = new Recipe("łatwy", 10, "");
 
         recipe1.setDish(dish1);
         recipe2.setDish(dish2);
@@ -152,13 +152,13 @@ public class ClientService {
         recipe9.setDish(dish9);
         recipe10.setDish(dish10);
 
-        // Tylko kasza manna
+        // Kasza manna
         IngredientRecipe ingredientRecipe1 = new IngredientRecipe(3);
         IngredientRecipe ingredientRecipe2 = new IngredientRecipe(0.375);
         IngredientRecipe ingredientRecipe3 = new IngredientRecipe(0.375);
         IngredientRecipe ingredientRecipe4 = new IngredientRecipe(0.5);
 
-        // Tylko kasza manna
+        // Kasza manna
         Ingredient ingredient1 = new Ingredient("Mleko", 40, 3.4, 0.5, 5);
         Ingredient ingredient2 = new Ingredient("Kasza manna", 359, 13, 1.1, 73);
         Ingredient ingredient3 = new Ingredient("Cukier", 386, 0, 0, 100);
@@ -176,6 +176,7 @@ public class ClientService {
         ingredientRecipe4.setRecipe(recipe9);
         ingredientRecipe4.setIngredient(ingredient4);
 
+        // Zapis do bazy danych
         dishRepository.save(dish1);
         dishRepository.save(dish2);
         dishRepository.save(dish3);

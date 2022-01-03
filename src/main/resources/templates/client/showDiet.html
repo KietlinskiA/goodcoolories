@@ -300,9 +300,9 @@
         <h1 class="u-custom-font u-text u-text-default u-text-1" style="margin-top:0;">Twoje Menu</h1>
         <p class="u-text u-text-2">Skomponowane specjalnie dla Ciebie tak, abyś poświęcił jak najmniej czasu do
             przygotowania posiłków i najadł się do syta ze smakiem.</p>
-        <div class="u-list u-repeater u-list-1" th:each="dish : ${diet.getDishSet()}">
+        <div class="u-list u-repeater u-list-1" th:each="dish : ${diet.getDishSet()}" >
             <div class="u-align-right u-container-style u-image u-list-item u-repeater-item u-shading u-video-cover u-image-1"
-                 data-image-width="996" data-image-height="389">
+                    th:style="'background-image: url('+${dish.getPhoto()}+')'" data-image-width="996" data-image-height="389">
                 <div class="u-container-layout u-similar-container u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-container-layout-1">
                     <div class="u-align-center u-black u-container-style u-group u-opacity u-opacity-35 u-video-cover u-group-1">
                         <div class="u-container-layout u-valign-middle u-container-layout-2" th:object="${dish}">
