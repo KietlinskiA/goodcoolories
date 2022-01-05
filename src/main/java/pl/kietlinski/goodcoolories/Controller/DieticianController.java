@@ -1,4 +1,4 @@
-package pl.kietlinski.goodcoolories.dietician.Controller;
+package pl.kietlinski.goodcoolories.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,13 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.kietlinski.goodcoolories.Entity.Diet;
 import pl.kietlinski.goodcoolories.Entity.Dish;
 import pl.kietlinski.goodcoolories.Entity.Order;
-import pl.kietlinski.goodcoolories.Repository.OrderRepository;
-import pl.kietlinski.goodcoolories.dietician.Service.DieticianService;
+import pl.kietlinski.goodcoolories.Service.DieticianService;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/admin")

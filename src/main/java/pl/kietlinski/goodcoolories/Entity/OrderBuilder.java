@@ -14,6 +14,7 @@ public class OrderBuilder {
     private String dietWish;
     private int dishCount;
     private String comment;
+    private String status;
 
     public OrderBuilder setName(String name) {
         this.name = name;
@@ -80,7 +81,12 @@ public class OrderBuilder {
         return this;
     }
 
+    public OrderBuilder setStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
     public Order createOrder() {
-        return new Order(name, eaddress, phone, street, zip, city, age, height, sex, activity, dietWish, dishCount, comment);
+        return new Order(name, eaddress, phone, street, zip, city, age, height, sex, activity, dietWish, dishCount, comment, status);
     }
 }

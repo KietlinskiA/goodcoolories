@@ -20,7 +20,7 @@ public class Order {
     private String name;
     @Column(length = 50, nullable = false)
     private String eaddress;
-    @Column(length = 9, nullable = false, unique = true)
+    @Column(length = 9, nullable = false)
     private String phone;
     @Column(length = 100, nullable = false)
     private String street;
@@ -28,15 +28,15 @@ public class Order {
     private String zip;
     @Column(length = 100, nullable = false)
     private String city;
-    @Column(length = 3, nullable = false)
+    @Column(length = 2, nullable = false)
     private int age;
     @Column(length = 3, nullable = false)
     private int height;
-    @Column(length = 6, nullable = false)
+    @Column(length = 9, nullable = false)
     private String sex;
-    @Column(length = 6, nullable = false)
+    @Column(length = 8, nullable = false)
     private String activity;
-    @Column(length = 4, nullable = false)
+    @Column(length = 8, nullable = false)
     private String dietWish;
     @Column(length = 1, nullable = false)
     private int dishCount;
@@ -48,7 +48,7 @@ public class Order {
     @OneToOne
     private Diet diet;
 
-    public Order(String name, String eaddress, String phone, String street, String zip, String city, int age, int height, String sex, String activity, String dietWish, int dishCount, String comment) {
+    public Order(String name, String eaddress, String phone, String street, String zip, String city, int age, int height, String sex, String activity, String dietWish, int dishCount, String comment, String status) {
         this.name = name;
         this.eaddress = eaddress;
         this.phone = phone;
@@ -62,7 +62,7 @@ public class Order {
         this.dietWish = dietWish;
         this.dishCount = dishCount;
         this.comment = comment;
-        this.status = "Nowy";
+        this.status = status;
     }
 
     @Override

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" lang="pl">
+<html lang="pl">
 <head>
     <link href="../img/diet_ico_white.png" rel="shortcut icon" type="image/x-icon"/>
     <title>GoodCoolories - skorzystaj już teraz!</title>
@@ -91,8 +91,12 @@
             padding: 5px;
         }
 
-        .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
+        .item:hover i, .question:hover p, .question-answer label:hover, input:hover::placeholder {
             color: #669999;
+        }
+
+        .item select {
+            width: 100px;
         }
 
         .item input:hover, .item select:hover, .item textarea:hover {
@@ -242,7 +246,7 @@
 </head>
 <body>
 <div class="testbox">
-    <form th:action="@{/new-order}" th:object="${order}">
+    <form action="/new-order" method="post">
         <div class="banner">
             <h1>Skorzystaj z oferty dietetyka</h1>
         </div>
@@ -255,59 +259,59 @@
         <div class="colums">
             <div class="item">
                 <label for="name">Imię i nazwisko<span>*</span></label>
-                <input id="name" type="text" name="name" th:field="*{name}" required/>
+                <input id="name" type="text" name="name" required/>
             </div>
             <div class="item">
                 <label for="eaddress">Adres email<span>*</span></label>
-                <input id="eaddress" type="email" name="eaddress" th:field="*{eaddress}" required/>
+                <input id="eaddress" type="email" name="eaddress" required/>
             </div>
             <div class="item">
                 <label for="phone">Telefon<span>*</span></label>
-                <input id="phone" type="tel" placeholder="123456789" name="phone" th:field="*{phone}" maxlength="9"
+                <input id="phone" type="tel" placeholder="123456789" name="phone" maxlength="9"
                        required/>
             </div>
             <div class="item">
                 <label for="street">Ulica<span>*</span></label>
-                <input id="street" type="text" name="street" th:field="*{street}" required/>
+                <input id="street" type="text" name="street" required/>
             </div>
             <div class="item">
                 <label for="zip">Kod pocztowy<span>*</span></label>
-                <input id="zip" type="text" placeholder="00-000" name="zip" th:field="*{zip}" maxlength="6" required/>
+                <input id="zip" type="number" name="zip" placeholder="50023" min="00000" max="99999" minlength="5" maxlength="5" required/>
             </div>
             <div class="item">
                 <label for="city">Miasto<span>*</span></label>
-                <input id="city" type="text" name="city" th:field="*{city}" required/>
+                <input id="city" type="text" name="city" placeholder="Wrocław" required/>
             </div>
             <div class="item">
                 <label for="age">Wiek<span>*</span></label>
-                <input id="age" type="number" name="age" th:field="*{age}" min value="18" required/>
+                <input id="age" type="number" name="age" value="20" min="18" max="60" required/>
             </div>
             <div class="item">
                 <label for="height">Wzrost<span>*</span></label>
-                <input id="height" type="number" name="height" th:field="*{height}" value="160" required/>
+                <input id="height" type="number" name="height" value="160" min="155" max="200" required/>
             </div>
         </div>
         <div class="item">
             <p>Płeć</p>
-            <select name="sex" th:field="*{sex}" required>
+            <select name="sex" required>
                 <option value="" disabled selected></option>
-                <option value="female">Kobieta</option>
-                <option value="male">Mężczyzna</option>
+                <option value="Kobieta">Kobieta</option>
+                <option value="Mężczyzna">Mężczyzna</option>
             </select>
         </div>
         <div class="question">
             <label>Twoja aktywność w tygodniu</label>
             <div class="question-answer">
                 <div>
-                    <input type="radio" value="low" id="radio_1" name="activity" th:field="*{activity}" required/>
+                    <input type="radio" value="0-2" id="radio_1" name="activity" checked/>
                     <label for="radio_1" class="radio"><span>0-2 razy</span></label>
                 </div>
                 <div>
-                    <input type="radio" value="medium" id="radio_2" name="activity" th:field="*{activity}"/>
+                    <input type="radio" value="3-5" id="radio_2" name="activity"/>
                     <label for="radio_2" class="radio"><span>3-5 razy</span></label>
                 </div>
                 <div>
-                    <input type="radio" value="high" id="radio_3" name="activity" th:field="*{activity}"/>
+                    <input type="radio" value="7" id="radio_3" name="activity"/>
                     <label for="radio_3" class="radio"><span>codziennie</span></label>
                 </div>
             </div>
@@ -316,24 +320,24 @@
             <label>Chcę</label>
             <div class="question-answer">
                 <div>
-                    <input type="radio" value="down" id="radio_11" name="dietWish" th:field="*{dietWish}" required/>
+                    <input type="radio" value="Schudnąć" id="radio_11" name="dietWish" checked/>
                     <label for="radio_11" class="radio"><span>Schudnąć</span></label>
                 </div>
                 <div>
-                    <input type="radio" value="keep" id="radio_21" name="dietWish" th:field="*{dietWish}"/>
+                    <input type="radio" value="Utrzymać" id="radio_21" name="dietWish" />
                     <label for="radio_21" class="radio"><span>Utrzymać wagę</span></label>
                 </div>
                 <div>
-                    <input type="radio" value="up" id="radio_31" name="dietWish" th:field="*{dietWish}"/>
+                    <input type="radio" value="Przytyć" id="radio_31" name="dietWish"/>
                     <label for="radio_31" class="radio"><span>Przytyć</span></label>
                 </div>
             </div>
         </div>
         <div class="item">
             <p>Ilość posiłków w ciągu dnia</p>
-            <select name="dishCount" th:field="*{dishCount}" required>
+            <select name="dishCount"required>
                 <option value="0" disabled></option>
-                <option value="3" selected>3</option>
+                <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
                 <option value="6">6</option>
@@ -341,7 +345,7 @@
         </div>
         <div class="item">
             <label for="comment">Uwagi dotyczące diety (napisz na co masz alergie, czego nie lubisz, itp.)</label>
-            <textarea id="comment" rows="3" name="comment" th:field="*{comment}" maxlength="1000" required></textarea>
+            <textarea id="comment" rows="3" name="comment" maxlength="1000" required></textarea>
         </div>
         <div class="question">
             <div class="question-answer">

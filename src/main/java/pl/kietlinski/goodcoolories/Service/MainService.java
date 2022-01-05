@@ -1,8 +1,10 @@
-package pl.kietlinski.goodcoolories.client.Service;
+package pl.kietlinski.goodcoolories.Service;
 
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Repository.*;
@@ -11,7 +13,7 @@ import java.util.Set;
 
 @Service
 @Data
-public class ClientService {
+public class MainService {
 
     private RecipeRepository recipeRepository;
     private IngredientRecipeRepository ingredientRecipeRepository;
@@ -20,66 +22,38 @@ public class ClientService {
     private OrderRepository orderRepository;
     private DietRepository dietRepository;
 
-    private String errorToken;
-    private Diet foundDiet;
-
     @Autowired
-    public ClientService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
+    public MainService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRecipeRepository = ingredientRecipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.dietRepository = dietRepository;
-        this.errorToken = "";
-        initDatabase();
     }
 
+    @EventListener(ApplicationReadyEvent.class)
     public void initDatabase() {
         Order order1 = new OrderBuilder()
-                .setName("Jan Kowal")
-                .setEaddress("j.k@wp.pl")
-                .setPhone("111111111")
-                .setStreet("Kowalska 1")
-                .setZip("11-111")
-                .setCity("Kowalów")
-                .setAge(25)
-                .setHeight(187)
-                .setSex("male")
-                .setActivity("low")
-                .setDietWish("up")
-                .setDishCount(5)
+                .setName("Jan Kowal").setEaddress("j.k@wp.pl").setPhone("111111111").setStreet("Kowalska 1")
+                .setZip("11-111").setCity("Kowalów").setAge(25).setHeight(187).setSex("Mężczyzna")
+                .setActivity("0-2").setDietWish("Schudnąć").setDishCount(5)
                 .setComment("Nie lubie salaty i pomidora")
+                .setStatus("Zakończony")
                 .createOrder();
         Order order2 = new OrderBuilder()
-                .setName("Ala Lis")
-                .setEaddress("a.l@wp.pl")
-                .setPhone("222222222")
-                .setStreet("Lisia 2")
-                .setZip("22-222")
-                .setCity("Lisów")
-                .setAge(45)
-                .setHeight(162)
-                .setSex("female")
-                .setActivity("medium")
-                .setDietWish("keep")
-                .setDishCount(4)
+                .setName("Ala Lis").setEaddress("a.l@wp.pl").setPhone("222222222").setStreet("Lisia 2")
+                .setZip("22-222").setCity("Lisów").setAge(45).setHeight(162).setSex("Kobieta")
+                .setActivity("3-5").setDietWish("Utrzymać").setDishCount(4)
                 .setComment("Nie lubie twarogu i ryżu")
+                .setStatus("Nowy")
                 .createOrder();
         Order order3 = new OrderBuilder()
-                .setName("Kamil Ul")
-                .setEaddress("k.u@wp.pl")
-                .setPhone("333333333")
-                .setStreet("Ulowa 3")
-                .setZip("33-333")
-                .setCity("Ulów")
-                .setAge(18)
-                .setHeight(173)
-                .setSex("male")
-                .setActivity("high")
-                .setDietWish("down")
-                .setDishCount(5)
+                .setName("Kamil Ul").setEaddress("k.u@wp.pl").setPhone("333333333").setStreet("Ulowa 3")
+                .setZip("33-333").setCity("Ulów").setAge(18).setHeight(173).setSex("Mężczyzna")
+                .setActivity("7").setDietWish("Przytyć").setDishCount(5)
                 .setComment("Nie lubie makaronu i sera żółtego")
+                .setStatus("Nowy")
                 .createOrder();
 
         Diet diet1 = new Diet("111");

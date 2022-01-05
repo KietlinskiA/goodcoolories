@@ -308,7 +308,7 @@
                         <div class="u-container-layout u-valign-middle u-container-layout-2" th:object="${dish}">
                             <h4 class="u-text u-text-default u-text-3" th:text="*{getName()}"></h4>
                             <h6 class="u-text u-text-default u-text-palette-3-base u-text-4">_____</h6>
-                            <a th:href="'/show-dish?dishId='+*{getDishId()}"
+                            <a th:href="'/show-dish?dishId='+*{getDishId()}+'&token='+${diet.getToken()}"
                                class="u-btn u-btn-rectangle u-button-style u-palette-3-base u-btn-1">Zobacz przepis</a>
                         </div>
                     </div>
