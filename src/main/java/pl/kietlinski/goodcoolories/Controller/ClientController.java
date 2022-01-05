@@ -1,19 +1,16 @@
 package pl.kietlinski.goodcoolories.Controller;
 
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import pl.kietlinski.goodcoolories.Entity.Diet;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.kietlinski.goodcoolories.Entity.Dish;
 import pl.kietlinski.goodcoolories.Entity.Order;
 import pl.kietlinski.goodcoolories.Entity.OrderBuilder;
 import pl.kietlinski.goodcoolories.Service.ClientService;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
 
 @Controller
 public class ClientController {
@@ -80,14 +77,16 @@ public class ClientController {
             return "redirect:/find";
         } else {
             clientService.setErrorToken("");
+            clientService.setDishList(token);
             return "redirect:/show-diet?token=" + token;
         }
     }
 
     @GetMapping("/show-diet")
-    public ModelAndView showDiet(@RequestParam String token) {
-        Diet diet = clientService.findDietInDb(token);
-        return new ModelAndView("client/showDiet", "diet", diet);
+    public String showDiet(@RequestParam String token, Model model) {
+        model.addAttribute("dishList", clientService.getDishList());
+        model.addAttribute("token", token);
+        return "client/showDiet";
     }
 
     @GetMapping("/show-dish")

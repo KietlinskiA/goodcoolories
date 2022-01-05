@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "dishes")
-public class Dish {
+public class Dish implements Comparable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dish_id")
@@ -46,5 +46,10 @@ public class Dish {
                 ", recipeId=" + recipe.getRecipeId() +
                 ", diets=" + dishIds +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

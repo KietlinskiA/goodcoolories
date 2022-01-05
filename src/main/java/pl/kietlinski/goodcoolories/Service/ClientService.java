@@ -4,8 +4,13 @@ package pl.kietlinski.goodcoolories.Service;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.kietlinski.goodcoolories.Entity.*;
+import pl.kietlinski.goodcoolories.Entity.Diet;
+import pl.kietlinski.goodcoolories.Entity.Dish;
+import pl.kietlinski.goodcoolories.Entity.Order;
 import pl.kietlinski.goodcoolories.Repository.*;
+
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 @Service
 @Data
@@ -19,7 +24,7 @@ public class ClientService {
     private DietRepository dietRepository;
 
     private String errorToken;
-    private Diet foundDiet;
+    private LinkedList<Dish> dishList;
 
     @Autowired
     public ClientService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
@@ -41,8 +46,9 @@ public class ClientService {
         return dietRepository.existsByToken(token);
     }
 
-    public Diet findDietInDb(String token) {
-        return dietRepository.findByToken(token);
+    public void setDishList(String token) {
+        Diet diet = dietRepository.findByToken(token);
+        dishList = diet.getDishSet().stream().sorted().collect(Collectors.toCollection(LinkedList::new));
     }
 
     public Dish getDishById(long dishId) {
