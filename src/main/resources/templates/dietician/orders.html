@@ -8,7 +8,7 @@
     <link href="../../css/dietician/style.css" rel="stylesheet">
     <style>
         .wrapper {
-            padding: 0 400px;
+            padding: 0 400px 50px;
         }
 
         .button-p {
@@ -75,7 +75,7 @@
     </aside>
     <section id="main-content">
         <div class="wrapper">
-            <div class="order-list" th:each="order : ${orderList}" th:object="${order}">
+            <div class="order-list" th:each="order : ${orderList}" th:object="${order}" th:style="'background-image: url(../../img/'+${order.getStatus()}+'.png)'">
                     <p>Aktywność: <span th:text="*{getActivity()}" style="float: right"></span></p>
                     <br/>
                     <p>Cel diety: <span th:text="*{getDietWish()}" style="float: right"></span></p>

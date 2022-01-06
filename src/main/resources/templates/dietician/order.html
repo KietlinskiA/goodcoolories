@@ -40,21 +40,13 @@
         }
 
         .order-left-col,
-        .order-mid-col,
         .order-right-col {
-            width: 25%;
+            width: 45%;
             padding: 10px;
             float: left;
+            background-size: contain;
         }
 
-        .order-mid-col {
-            float: left;
-        }
-
-        .order-right-col {
-            float: right;
-            width: 50%;
-        }
     </style>
 </head>
 <body>
@@ -89,7 +81,7 @@
     <section id="main-content">
         <div class="wrapper">
             <div class="order-list">
-                <div class="order-left-col">
+                <div class="order-left-col" th:style="'background-image: url(../../img/'+${order.getStatus()}+'.png)'">
                     <p>Imię i nazwisko: <span th:text="${user.getName()}"></span></p>
                     <br/>
                     <p>Adres email: <span th:text="${user.getEaddress()}"></span></p>
@@ -114,12 +106,15 @@
                     <p style="width: 100%;height: 200px;word-break: break-all; font-size: 12px"
                        th:text="${order.getComment()}"></p>
                     <br/>
-                    <p>Status: <span th:text="${order.getStatus()}"></span></p>
+                    <p>
+                        Status: <span th:text="${order.getStatus()}"></span>
+                        <a class="button-p" style="float: right" th:href="'/admin/change-status?orderId='+${order.getOrderId()}">ZMIEŃ</a>
+                    </p>
                 </div>
                 <div class="order-right-col">
                     <p>Lista posiłków:</p>
                     <br/>
-                    <div th:each="dish : ${order.getDiet().getDishSet()}">
+                    <div th:each="dish : ${orderDishList}">
                         <p>
                             <a class="button-p" methods="delete"
                                th:href="'/admin/delete-dish-from-diet?orderId='+${order.getOrderId()}+'&dietId='+${order.getDiet().getDietId()}+'&dishId='+${dish.getDishId()}">X</a>
@@ -135,12 +130,12 @@
                         <select name="dishIdToAdd"
                                 style="width: 440px; height: 40px; font-size: 15px; margin: 0 0 20px 15px;" required>
                             <option value="" disabled></option>
-                            <option th:each="dish : ${dishList}" th:text="${dish.getName()}"
+                            <option th:each="dish : ${allDishList}" th:text="${dish.getName()}"
                                     th:value="${dish.getDishId()}"></option>
                         </select>
                         <br/>
                         <p>
-                            <input type="submit" class="button-p" value="ADD">
+                            <input type="submit" class="button-p" value="ADD" th:style="'visibility:'+${visibility}">
                         </p>
                     </form>
                 </div>

@@ -51,34 +51,32 @@ public class DieticianController {
     public ModelAndView showOrder(@RequestParam long orderId, Model model) {
         Order orderById = dieticianService.getOrderById(orderId);
         User user = orderById.getUser();
-        List<Dish> dishList = dieticianService.getDishList();
+        dieticianService.setOrderDishList(orderById);
+        List<Dish> orderDishList = dieticianService.getOrderDishList();
+        List<Dish> allDishList = dieticianService.getAllDishList();
+        String visibility = dieticianService.getVisibility(orderDishList, orderById);
         model.addAttribute("order", orderById);
         model.addAttribute("user", user);
-        model.addAttribute("dishList", dishList);
+        model.addAttribute("orderDishList", orderDishList);
+        model.addAttribute("allDishList", allDishList);
+        model.addAttribute("visibility", visibility);
         return new ModelAndView("dietician/order");
     }
 
     @RequestMapping("/delete-dish-from-diet")
     public String deleteDishFromDiet(@RequestParam long orderId, @RequestParam long dishId, @RequestParam long dietId) {
-        Dish dish = dieticianService.getDishRepository().getById(dishId);
-        Diet diet = dieticianService.getDietRepository().getById(dietId);
-        diet.getDishSet().remove(dish);
-        dieticianService.getDietRepository().save(diet);
+        dieticianService.deleteDishFromDiet(dishId, dietId);
         return "redirect:/admin/order?orderId=" + orderId;
     }
 
     @RequestMapping("/add-dish-to-diet")
     public String addDishToDiet(@RequestParam long orderId, @RequestParam long dishIdToAdd) {
-        Order order = dieticianService.getOrderRepository().getById(orderId);
-        Dish dish = dieticianService.getDishRepository().getById(dishIdToAdd);
-        Diet diet = order.getDiet();
-        diet.getDishSet().add(dish);
-        dieticianService.getDietRepository().save(diet);
+        dieticianService.addDishToDiet(orderId, dishIdToAdd);
         return "redirect:/admin/order?orderId=" + orderId;
     }
 
     @GetMapping("/add-recipe")
-    public String showRecipes(Model model) {
+    public String addRecipe(Model model) {
         List<Ingredient> ingredientList = dieticianService.getIngredientList();
         model.addAttribute("ingredientList", ingredientList);
         model.addAttribute("newDish", new Dish());
@@ -108,6 +106,11 @@ public class DieticianController {
         return "redirect:/admin/add-recipe";
     }
 
+    @RequestMapping("/change-status")
+    public String changeStatus(@RequestParam long orderId) {
+        dieticianService.setStatus(orderId);
+        return "redirect:/admin/order?orderId=" + orderId;
+    }
 
 
 }

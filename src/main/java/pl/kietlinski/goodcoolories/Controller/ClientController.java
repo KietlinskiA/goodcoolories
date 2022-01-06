@@ -1,6 +1,8 @@
 package pl.kietlinski.goodcoolories.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +16,10 @@ import pl.kietlinski.goodcoolories.Model.UserBuilder;
 import pl.kietlinski.goodcoolories.Model.OrderBuilder;
 import pl.kietlinski.goodcoolories.Service.ClientService;
 
+import java.util.List;
+
 @Controller
+@Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ClientController {
 
     private final ClientService clientService;
@@ -95,8 +100,12 @@ public class ClientController {
     @GetMapping("/show-dish")
     public String showDish(@RequestParam long dishId, @RequestParam String token, Model model) {
         Dish dishById = clientService.getDishById(dishId);
+        List<String> ingredientDescriptionList = clientService.getIngredientDescriptionList();
+        List<String> caloriesDescriptionList = clientService.getCaloriesDescriptionList(dishById.getRecipe().getRecipeId());
         model.addAttribute("dish", dishById);
         model.addAttribute("token", token);
+        model.addAttribute("ingredientDescriptionList", ingredientDescriptionList);
+        model.addAttribute("caloriesDescriptionList", caloriesDescriptionList);
         return "client/showDish";
     }
 
