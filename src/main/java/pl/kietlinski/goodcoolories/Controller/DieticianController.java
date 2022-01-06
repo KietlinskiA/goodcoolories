@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import pl.kietlinski.goodcoolories.Entity.Diet;
-import pl.kietlinski.goodcoolories.Entity.Dish;
-import pl.kietlinski.goodcoolories.Entity.Order;
+import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Service.DieticianService;
 
 import java.util.List;
@@ -78,14 +76,34 @@ public class DieticianController {
     }
 
     @GetMapping("/add-recipe")
-    public ModelAndView showRecipes() {
-        return new ModelAndView("dietician/addRecipe", "newDish", new Dish());
+    public String showRecipes(Model model) {
+        List<Ingredient> ingredientList = dieticianService.getIngredientList();
+        model.addAttribute("ingredientList", ingredientList);
+        model.addAttribute("newDish", new Dish());
+        return "dietician/addRecipe";
     }
 
-    @RequestMapping("/add-dish-to-base")
-    public String addDishToBase(@RequestBody Dish dish) {
-        dieticianService.getDishRepository().save(dish);
-        return "redirect:/admin/recipes";
+    @PostMapping("/add-dish-to-base")
+    public String addDishToBase(@RequestParam String name,
+                                @RequestParam String photo,
+                                @RequestParam String levelOfDifficulty,
+                                @RequestParam int preparationTime,
+                                @RequestParam String description,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient1checkbox,
+                                @RequestParam(required = false) double ingredient1proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient2checkbox,
+                                @RequestParam(required = false) double ingredient2proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient3checkbox,
+                                @RequestParam(required = false) double ingredient3proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient4checkbox,
+                                @RequestParam(required = false) double ingredient4proportion) {
+        dieticianService.addDishToDb(
+                new Dish(name, photo),
+                new Recipe(levelOfDifficulty, preparationTime, description),
+                List.of(ingredient1checkbox, ingredient2checkbox, ingredient3checkbox, ingredient4checkbox),
+                List.of(ingredient1proportion, ingredient2proportion, ingredient3proportion, ingredient4proportion)
+        );
+        return "redirect:/admin/add-recipe";
     }
 
 

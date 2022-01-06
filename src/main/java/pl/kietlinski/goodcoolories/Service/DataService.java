@@ -3,17 +3,16 @@ package pl.kietlinski.goodcoolories.Service;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.kietlinski.goodcoolories.Entity.*;
+import pl.kietlinski.goodcoolories.Model.OrderBuilder;
 import pl.kietlinski.goodcoolories.Repository.*;
 
 import java.util.Set;
 
 @Service
 @Data
-public class MainService {
+public class DataService {
 
     private RecipeRepository recipeRepository;
     private IngredientRecipeRepository ingredientRecipeRepository;
@@ -23,7 +22,7 @@ public class MainService {
     private DietRepository dietRepository;
 
     @Autowired
-    public MainService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
+    public DataService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRecipeRepository = ingredientRecipeRepository;
         this.ingredientRepository = ingredientRepository;
@@ -32,7 +31,7 @@ public class MainService {
         this.dietRepository = dietRepository;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void initDatabase() {
         Order order1 = new OrderBuilder()
                 .setName("Jan Kowal").setEaddress("j.k@wp.pl").setPhone("111111111").setStreet("Kowalska 1")

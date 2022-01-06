@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.kietlinski.goodcoolories.Entity.Dish;
 import pl.kietlinski.goodcoolories.Entity.Order;
-import pl.kietlinski.goodcoolories.Entity.OrderBuilder;
+import pl.kietlinski.goodcoolories.Model.OrderBuilder;
 import pl.kietlinski.goodcoolories.Service.ClientService;
 
 @Controller

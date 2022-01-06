@@ -1,4 +1,6 @@
-package pl.kietlinski.goodcoolories.Entity;
+package pl.kietlinski.goodcoolories.Model;
+
+import pl.kietlinski.goodcoolories.Entity.Order;
 
 public class OrderBuilder {
     private String name;

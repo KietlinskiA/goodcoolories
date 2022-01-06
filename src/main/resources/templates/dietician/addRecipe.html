@@ -18,6 +18,7 @@
             color: #666;
             line-height: 22px;
         }
+
         .testbox h1 {
             position: absolute;
             margin: 0;
@@ -25,6 +26,7 @@
             color: #fff;
             z-index: 2;
         }
+
         .testbox {
             display: flex;
             justify-content: center;
@@ -32,6 +34,7 @@
             height: inherit;
             padding: 20px;
         }
+
         .testbox form {
             width: auto;
             padding: 20px;
@@ -39,6 +42,7 @@
             background: #fff;
             box-shadow: 0 0 10px 0 #cc0052;
         }
+
         .testbox .banner {
             position: relative;
             height: 210px;
@@ -49,6 +53,7 @@
             align-items: center;
             text-align: center;
         }
+
         .testbox .banner::after {
             content: "";
             background-color: rgba(0, 0, 0, 0.4);
@@ -56,40 +61,49 @@
             width: 100%;
             height: 100%;
         }
-        .testbox input, .testbox textarea, .testbox select  {
+
+        .testbox input, .testbox textarea, .testbox select {
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 3px;
         }
+
         .testbox input {
             width: 100%;
             padding: 5px;
         }
+
         .testbox select {
             width: 100%;
             padding: 7px 0;
             background: transparent;
         }
+
         .testbox textarea {
             width: 100%;
             padding: 5px;
             resize: none;
         }
+
         .testbox .item:hover p, .testbox input:hover::placeholder {
             color: #cc0052;
         }
+
         .testbox .item input:hover, .testbox .item select:hover, .testbox .item textarea:hover {
             border: 1px solid transparent;
             box-shadow: 0 0 6px 0 #cc0052;
             color: #cc0052;
         }
+
         .testbox .item {
             position: relative;
         }
+
         .testbox .btn-block {
             margin-top: 10px;
             text-align: center;
         }
+
         .testbox button {
             width: 150px;
             padding: 10px;
@@ -100,6 +114,7 @@
             color: #fff;
             cursor: pointer;
         }
+
         .testbox button:hover {
             background: #ff0066;
         }
@@ -137,7 +152,7 @@
         <section class="wrapper">
             <div id="main-container">
                 <div class="testbox">
-                    <form action="/">
+                    <form th:action="@{/admin/add-dish-to-base}" method="post">
                         <div class="banner">
                             <h1>Dodaj swój przepis</h1>
                         </div>
@@ -149,10 +164,6 @@
                         <div class="item">
                             <p>Photo</p>
                             <input type="text" name="photo" maxlength="500" required/>
-                        </div>
-                        <div class="item">
-                            <p>Krótki opis potrawy</p>
-                            <textarea name="description" rows="3" maxlength="1000" required></textarea>
                         </div>
                         <div class="contact-item">
                             <div class="item">
@@ -170,11 +181,6 @@
                             </div>
                         </div>
 
-                        <div class="item">
-                            <p>Opis przygotowania</p>
-                            <textarea name="description" rows="6" maxlength="1000" required></textarea>
-                        </div>
-
 <!--                        <div class="contact-item" style="height: 66px">-->
 <!--                            <div class="item" style="float:left; width: 45%;">-->
 <!--                                <p>Dodaj składnik</p>-->
@@ -187,17 +193,29 @@
 <!--                            </div>-->
 <!--                            <div class="item" style="float:right; width: 45%;">-->
 <!--                                <p>Proporcja</p>-->
-<!--                                <input type="number" name="proportion" value="1.0" min="0.1" max="100.0" step="0.1" />-->
+<!--                                <input type="number" name="proportion" value="1.0" min="0.1" max="100.0" step="0.1"/>-->
 <!--                            </div>-->
 <!--                        </div>-->
 
-<!--                        <div class="item">-->
-<!--                            <p>Dodane składniki:</p>-->
-<!--                            <span name="photo">X Rzodkiewka</span>-->
-<!--                        </div>-->
+                        <div class="item">
+                            <p>Dodaj składniki:</p>
+                            <p style="font-size: 11px">(makroskładniki w przypadku 100g, 1 proporcja = 100g składnika)</p>
+                            <p th:each="ingredient : ${ingredientList}" th:object="${ingredient}">
+                                <input type="checkbox" th:name="'ingredient'+*{getIngredientId()}+'checkbox'" style="width: auto">
+                                <input type="number" th:name="'ingredient'+*{getIngredientId()}+'proportion'" min="0.1" max="99.9" step="0.1" value="1" style="width: 70px;">
+                                <span th:text="*{getName()}"></span>
+                                <span th:text="'(kcal: '+*{getKcal()}+', B:'+*{getProtein()}+'g, T:'+*{getFat()}+'g, W:'+*{getFat()}+'g)'"></span>
+                            </p>
+                        </div>
+
+                        <br/>
+                        <div class="item">
+                            <p>Opis przygotowania</p>
+                            <textarea name="description" rows="6" maxlength="1000" required></textarea>
+                        </div>
 
                         <div class="btn-block">
-                            <button type="submit" href="/">DALEJ</button>
+                            <button type="submit">DODAJ</button>
                         </div>
                     </form>
                 </div>
