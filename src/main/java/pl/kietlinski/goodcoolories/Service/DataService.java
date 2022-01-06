@@ -3,9 +3,12 @@ package pl.kietlinski.goodcoolories.Service;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Model.OrderBuilder;
+import pl.kietlinski.goodcoolories.Model.UserBuilder;
 import pl.kietlinski.goodcoolories.Repository.*;
 
 import java.util.Set;
@@ -20,46 +23,58 @@ public class DataService {
     private DishRepository dishRepository;
     private OrderRepository orderRepository;
     private DietRepository dietRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public DataService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
+    public DataService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository, UserRepository userRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRecipeRepository = ingredientRecipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.dietRepository = dietRepository;
+        this.userRepository = userRepository;
     }
 
 //    @EventListener(ApplicationReadyEvent.class)
     public void initDatabase() {
-        Order order1 = new OrderBuilder()
+        User user1 = new UserBuilder()
                 .setName("Jan Kowal").setEaddress("j.k@wp.pl").setPhone("111111111").setStreet("Kowalska 1")
                 .setZip("11-111").setCity("Kowalów").setAge(25).setHeight(187).setSex("Mężczyzna")
+                .createUser();
+        User user2 = new UserBuilder()
+                .setName("Kamil Ul").setEaddress("k.u@wp.pl").setPhone("222222222").setStreet("Ulowa 3")
+                .setZip("22-222").setCity("Ulów").setAge(18).setHeight(173).setSex("Mężczyzna")
+                .createUser();
+        User user3 = new UserBuilder()
+                .setName("Ala Lis").setEaddress("a.l@wp.pl").setPhone("333333333").setStreet("Lisia 2")
+                .setZip("33-333").setCity("Lisów").setAge(45).setHeight(162).setSex("Kobieta")
+                .createUser();
+
+        Order order1 = new OrderBuilder()
                 .setActivity("0-2").setDietWish("Schudnąć").setDishCount(5)
                 .setComment("Nie lubie salaty i pomidora")
                 .setStatus("Zakończony")
                 .createOrder();
         Order order2 = new OrderBuilder()
-                .setName("Ala Lis").setEaddress("a.l@wp.pl").setPhone("222222222").setStreet("Lisia 2")
-                .setZip("22-222").setCity("Lisów").setAge(45).setHeight(162).setSex("Kobieta")
                 .setActivity("3-5").setDietWish("Utrzymać").setDishCount(4)
                 .setComment("Nie lubie twarogu i ryżu")
                 .setStatus("Nowy")
                 .createOrder();
         Order order3 = new OrderBuilder()
-                .setName("Kamil Ul").setEaddress("k.u@wp.pl").setPhone("333333333").setStreet("Ulowa 3")
-                .setZip("33-333").setCity("Ulów").setAge(18).setHeight(173).setSex("Mężczyzna")
                 .setActivity("7").setDietWish("Przytyć").setDishCount(5)
                 .setComment("Nie lubie makaronu i sera żółtego")
                 .setStatus("Nowy")
                 .createOrder();
 
+        order1.setUser(user1);
+        order2.setUser(user2);
+        order3.setUser(user3);
+
         Diet diet1 = new Diet("111");
         Diet diet2 = new Diet("222");
         Diet diet3 = new Diet("333");
 
-        order1.setStatus("Zakończony");
         order1.setDiet(diet1);
         order2.setDiet(diet2);
         order3.setDiet(diet3);
@@ -149,7 +164,7 @@ public class DataService {
         ingredientRecipe4.setRecipe(recipe9);
         ingredientRecipe4.setIngredient(ingredient4);
 
-        // Zapis do bazy danych
+        // Dish
         dishRepository.save(dish1);
         dishRepository.save(dish2);
         dishRepository.save(dish3);
@@ -160,20 +175,24 @@ public class DataService {
         dishRepository.save(dish8);
         dishRepository.save(dish9);
         dishRepository.save(dish10);
-
+        // Diet
         dietRepository.save(diet1);
         dietRepository.save(diet2);
         dietRepository.save(diet3);
-
+        // User
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        // Order
         orderRepository.save(order1);
         orderRepository.save(order2);
         orderRepository.save(order3);
-
+        // Ingredient
         ingredientRepository.save(ingredient1);
         ingredientRepository.save(ingredient2);
         ingredientRepository.save(ingredient3);
         ingredientRepository.save(ingredient4);
-
+        // Recipe
         recipeRepository.save(recipe1);
         recipeRepository.save(recipe2);
         recipeRepository.save(recipe3);
@@ -184,7 +203,7 @@ public class DataService {
         recipeRepository.save(recipe8);
         recipeRepository.save(recipe9);
         recipeRepository.save(recipe10);
-
+        // IngredientRecipe
         ingredientRecipeRepository.save(ingredientRecipe1);
         ingredientRecipeRepository.save(ingredientRecipe2);
         ingredientRecipeRepository.save(ingredientRecipe3);
