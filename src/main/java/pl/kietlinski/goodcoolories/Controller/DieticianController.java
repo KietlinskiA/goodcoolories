@@ -42,27 +42,29 @@ public class DieticianController {
     @GetMapping("/orders")
     public ModelAndView showOrders(Model model) {
         dieticianService.setError("");
-        model.addAttribute("orderList", dieticianService.getOrderRepository().findAll());
+        List<Order> orderList = dieticianService.getOrderList();
+        model.addAttribute("orderList", orderList);
         return new ModelAndView("dietician/orders");
     }
 
     @GetMapping("/order")
     public ModelAndView showOrder(@RequestParam long orderId, Model model) {
-        Order orderById = dieticianService.getOrderRepository().getById(orderId);
-        List<Dish> dishList = dieticianService.getDishRepository().findAll();
+        Order orderById = dieticianService.getOrderById(orderId);
+        User user = orderById.getUser();
+        List<Dish> dishList = dieticianService.getDishList();
         model.addAttribute("order", orderById);
+        model.addAttribute("user", user);
         model.addAttribute("dishList", dishList);
-        model.addAttribute("activeToken", dieticianService.getActiveToken());
         return new ModelAndView("dietician/order");
     }
 
     @RequestMapping("/delete-dish-from-diet")
-    public String deleteDishFromDiet(@RequestParam long dishId, @RequestParam long dietId) {
+    public String deleteDishFromDiet(@RequestParam long orderId, @RequestParam long dishId, @RequestParam long dietId) {
         Dish dish = dieticianService.getDishRepository().getById(dishId);
         Diet diet = dieticianService.getDietRepository().getById(dietId);
         diet.getDishSet().remove(dish);
         dieticianService.getDietRepository().save(diet);
-        return "redirect:/admin/order?orderId=" + diet.getOrder().getOrderId();
+        return "redirect:/admin/order?orderId=" + orderId;
     }
 
     @RequestMapping("/add-dish-to-diet")

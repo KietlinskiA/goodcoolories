@@ -7,38 +7,42 @@ import org.springframework.stereotype.Service;
 import pl.kietlinski.goodcoolories.Entity.Diet;
 import pl.kietlinski.goodcoolories.Entity.Dish;
 import pl.kietlinski.goodcoolories.Entity.Order;
+import pl.kietlinski.goodcoolories.Entity.User;
 import pl.kietlinski.goodcoolories.Repository.*;
 
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Data
 public class ClientService {
 
-    private RecipeRepository recipeRepository;
-    private IngredientRecipeRepository ingredientRecipeRepository;
-    private IngredientRepository ingredientRepository;
     private DishRepository dishRepository;
     private OrderRepository orderRepository;
     private DietRepository dietRepository;
+    private UserRepository userRepository;
 
     private String errorToken;
     private LinkedList<Dish> dishList;
 
     @Autowired
-    public ClientService(RecipeRepository recipeRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository, DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository) {
-        this.recipeRepository = recipeRepository;
-        this.ingredientRecipeRepository = ingredientRecipeRepository;
-        this.ingredientRepository = ingredientRepository;
+    public ClientService(DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository, UserRepository userRepository) {
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.dietRepository = dietRepository;
+        this.userRepository = userRepository;
         this.errorToken = "";
     }
 
-    public void saveOrder(Order newOrder) {
-        newOrder.setStatus("Nowy");
+    public void saveOrder(User user, Order newOrder) {
+        Optional<User> optionalUser = userRepository.findByPhone(user.getPhone());
+        if(optionalUser.isEmpty()){
+            userRepository.save(user);
+            newOrder.setUser(user);
+        } else {
+            newOrder.setUser(optionalUser.get());
+        }
         orderRepository.save(newOrder);
     }
 

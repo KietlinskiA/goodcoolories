@@ -3,10 +3,7 @@ package pl.kietlinski.goodcoolories.Service;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.kietlinski.goodcoolories.Entity.Dish;
-import pl.kietlinski.goodcoolories.Entity.Ingredient;
-import pl.kietlinski.goodcoolories.Entity.IngredientRecipe;
-import pl.kietlinski.goodcoolories.Entity.Recipe;
+import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Model.Dietician;
 import pl.kietlinski.goodcoolories.Repository.*;
 
@@ -65,5 +62,17 @@ public class DieticianService {
         for(IngredientRecipe ingredientRecipe : ingredientRecipesToAdd){
             ingredientRecipeRepository.save(ingredientRecipe);
         };
+    }
+
+    public List<Dish> getDishList() {
+        return dishRepository.findAll();
+    }
+
+    public Order getOrderById(long orderId) {
+        return orderRepository.getById(orderId);
+    }
+
+    public List<Order> getOrderList() {
+        return orderRepository.findAll();
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.kietlinski.goodcoolories.Entity.Dish;
 import pl.kietlinski.goodcoolories.Entity.Order;
+import pl.kietlinski.goodcoolories.Entity.User;
+import pl.kietlinski.goodcoolories.Model.UserBuilder;
 import pl.kietlinski.goodcoolories.Model.OrderBuilder;
 import pl.kietlinski.goodcoolories.Service.ClientService;
 
@@ -58,8 +60,9 @@ public class ClientController {
                               @RequestParam String dietWish,
                               @RequestParam int dishCount,
                               @RequestParam String comment) {
-        Order newOrder = new Order(name, eaddress, phone, street, zip, city, age, height, sex, activity, dietWish, dishCount, comment, "Nowy");
-        clientService.saveOrder(newOrder);
+        User user = new UserBuilder().setName(name).setEaddress(eaddress).setPhone(phone).setStreet(street).setZip(zip).setCity(city).setAge(age).setHeight(height).setSex(sex).createUser();
+        Order newOrder = new Order(activity, dietWish, dishCount, comment, "Nowy");
+        clientService.saveOrder(user, newOrder);
         return "redirect:/thank-you";
     }
 

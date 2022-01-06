@@ -88,47 +88,46 @@
     </aside>
     <section id="main-content">
         <div class="wrapper">
-            <div class="order-list" th:object="${order}">
+            <div class="order-list">
                 <div class="order-left-col">
-                    <p>Imię i nazwisko: <span th:text="*{getName()}"></span></p>
+                    <p>Imię i nazwisko: <span th:text="${user.getName()}"></span></p>
                     <br/>
-                    <p>Adres email: <span th:text="*{getEaddress()}"></span></p>
+                    <p>Adres email: <span th:text="${user.getEaddress()}"></span></p>
                     <br/>
-                    <p>Telefon: <span th:text="*{getPhone()}"></span></p>
+                    <p>Telefon: <span th:text="${user.getPhone()}"></span></p>
                     <br/>
-                    <p>Ulica: <span th:text="*{getStreet()}"></span></p>
+                    <p>Ulica: <span th:text="${user.getStreet()}"></span></p>
                     <br/>
-                    <p>Adres: <span th:text="*{getZip()}+' '+*{getCity()}"></span></p>
+                    <p>Adres: <span th:text="${user.getZip()}+' '+${user.getCity()}"></span></p>
                     <br/>
-                    <p>Wiek: <span th:text="*{getAge()}"></span></p>
+                    <p>Wiek: <span th:text="${user.getAge()}"></span></p>
                     <br/>
-                    <p>Wzrost: <span th:text="*{getHeight()}"></span></p>
+                    <p>Wzrost: <span th:text="${user.getHeight()}"></span></p>
                     <br/>
-                    <p>Aktywność: <span th:text="*{getActivity()}"></span></p>
+                    <p>Aktywność: <span th:text="${order.getActivity()}"></span></p>
                     <br/>
-                    <p>Cel diety: <span th:text="*{getDietWish()}"></span></p>
+                    <p>Cel diety: <span th:text="${order.getDietWish()}"></span></p>
                     <br/>
-                    <p>Ilość posiłków: <span th:text="*{getDishCount()}"></span></p>
+                    <p>Ilość posiłków: <span th:text="${order.getDishCount()}"></span></p>
                     <br/>
                     <p>Uwagi:</p>
                     <p style="width: 100%;height: 200px;word-break: break-all; font-size: 12px"
-                       th:text="*{getComment()}"></p>
+                       th:text="${order.getComment()}"></p>
                     <br/>
-                    <p>Status: <span th:text="*{getStatus()}"></span></p>
+                    <p>Status: <span th:text="${order.getStatus()}"></span></p>
                 </div>
-                <div class="order-mid-col">
+                <div class="order-right-col">
                     <p>Lista posiłków:</p>
                     <br/>
-                    <div th:each="dish : ${order.getDiet().getDishSet()}" th:object="${dish}">
+                    <div th:each="dish : ${order.getDiet().getDishSet()}">
                         <p>
                             <a class="button-p" methods="delete"
-                               th:href="'/admin/delete-dish-from-diet?activeToken='+${activeToken}+'&dietId='+${order.getDiet().getDietId()}+'&dishId='+*{getDishId()}">X</a>
-                            <span th:text="*{getName()}" style="margin-left: 10px; word-break: break-word;"></span>
+                               th:href="'/admin/delete-dish-from-diet?orderId='+${order.getOrderId()}+'&dietId='+${order.getDiet().getDietId()}+'&dishId='+${dish.getDishId()}">X</a>
+                            <span th:text="${dish.getName()}" style="margin-left: 10px; word-break: break-word;"></span>
                         </p>
                         <br/>
                     </div>
-                </div>
-                <div class="order-right-col">
+                    <br/>
                     <form action="/admin/add-dish-to-diet">
                         <input name="orderId" type="number" th:value="${order.getOrderId()}" hidden>
                         <p>Dodaj posiłek:</p>
