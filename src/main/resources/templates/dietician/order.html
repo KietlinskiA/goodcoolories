@@ -74,15 +74,13 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
                 <li class="mt">
-                    <a class="active" th:href="'/admin/orders?activeToken='+${activeToken}">
-                        <i class="fa fa-money"></i>
+                    <a class="active" th:href="@{/admin/orders}">
                         <span>Zamówienia</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a th:href="'/admin/panel?activeToken='+${activeToken}">
-                        <i class="fa fa-sticky-note-o"></i>
-                        <span>Przepisy</span>
+                    <a th:href="@{/admin/add-recipe}">
+                        <span>Dodaj przepis</span>
                     </a>
                 </li>
             </ul>

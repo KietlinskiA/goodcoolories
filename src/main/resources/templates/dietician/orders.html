@@ -74,14 +74,12 @@
             <ul class="sidebar-menu" id="nav-accordion">
                 <li class="mt">
                     <a class="active" th:href="@{/admin/orders}">
-                        <i class="fa fa-money"></i>
                         <span>Zamówienia</span>
                     </a>
                 </li>
                 <li class="sub-menu">
                     <a th:href="@{/admin/add-recipe}">
-                        <i class="fa fa-sticky-note-o"></i>
-                        <span>Przepisy</span>
+                        <span>Dodaj przepis</span>
                     </a>
                 </li>
             </ul>
@@ -117,7 +115,7 @@
                     <br/>
                     <br/>
                     <br/>
-                    <a class="button-p" th:href="'/admin/show-order?orderId='+*{getOrderId()}">
+                    <a class="button-p" th:href="'/admin/order?orderId='+*{getOrderId()}">
                         <span >Przejdź</span>
                     </a>
                 </div>
