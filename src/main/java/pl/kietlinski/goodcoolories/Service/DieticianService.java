@@ -49,8 +49,6 @@ public class DieticianService {
     public void addDishToDb(Dish dish, Recipe recipe, List<String> checkboxs, List<Double> proportions) {
         List<IngredientRecipe> ingredientRecipesToAdd = new ArrayList<>();
         List<Ingredient> ingredientListToAdd = new ArrayList<>();
-        ;
-
         recipe.setDish(dish);
         for (int i = 0; i < 4; i++) {
             if (checkboxs.get(i).equals("on")) {
@@ -65,12 +63,10 @@ public class DieticianService {
         for (Ingredient ingredient : ingredientListToAdd) {
             ingredientRepository.save(ingredient);
         }
-        ;
         recipeRepository.save(recipe);
         for (IngredientRecipe ingredientRecipe : ingredientRecipesToAdd) {
             ingredientRecipeRepository.save(ingredientRecipe);
         }
-        ;
     }
 
     public Order getOrderById(long orderId) {
@@ -135,5 +131,10 @@ public class DieticianService {
             order.setStatus("Nowy");
         }
         orderRepository.save(order);
+    }
+
+    public boolean checkPassword(String password) {
+        String dieticianToken = String.valueOf(dietician.getToken());
+        return dieticianToken.equals(password);
     }
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <meta charset="UTF-8">
     <link href="../img/diet_ico_white.png" rel="shortcut icon" type="image/x-icon"/>
     <title>GoodCoolories - skorzystaj już teraz!</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
@@ -115,7 +116,7 @@
 
         .week {
             display: flex;
-            justfiy-content: space-between;
+            justify-content: space-between;
         }
 
         .colums {
@@ -293,7 +294,7 @@
         <div class="item">
             <p>Płeć</p>
             <select name="sex" required>
-                <option value="" disabled selected></option>
+                <option value="" disabled selected>-</option>
                 <option value="Kobieta">Kobieta</option>
                 <option value="Mężczyzna">Mężczyzna</option>
             </select>
@@ -334,8 +335,8 @@
         </div>
         <div class="item">
             <p>Ilość posiłków w ciągu dnia</p>
-            <select name="dishCount"required>
-                <option value="0" disabled></option>
+            <select name="dishCount" required>
+                <option value="" disabled>-</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>

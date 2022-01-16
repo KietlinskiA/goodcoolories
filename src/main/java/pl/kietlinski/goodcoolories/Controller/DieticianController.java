@@ -3,10 +3,7 @@ package pl.kietlinski.goodcoolories.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Service.DieticianService;
@@ -30,21 +27,29 @@ public class DieticianController {
     }
 
     @GetMapping("/login")
-    public ModelAndView login() {
-        return new ModelAndView("dietician/login", "error", dieticianService.getError());
+    public String login(Model model) {
+        model.addAttribute("error", dieticianService.getError());
+        model.addAttribute("password", "");
+        return "dietician/login";
     }
 
     @GetMapping("/logout")
     public String logout() {
+        dieticianService.setError("");
         return "redirect:/admin/login";
     }
 
     @GetMapping("/orders")
-    public ModelAndView showOrders(Model model) {
-        dieticianService.setError("");
-        List<Order> orderList = dieticianService.getOrderList();
-        model.addAttribute("orderList", orderList);
-        return new ModelAndView("dietician/orders");
+    public String showOrders(@RequestParam String password, Model model) {
+        if(dieticianService.checkPassword(password)){
+            dieticianService.setError("");
+            List<Order> orderList = dieticianService.getOrderList();
+            model.addAttribute("orderList", orderList);
+            return "dietician/orders";
+        } else {
+            dieticianService.setError("Błędne hasło");
+            return "redirect:/admin/login";
+        }
     }
 
     @GetMapping("/order")

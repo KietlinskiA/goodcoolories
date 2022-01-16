@@ -141,8 +141,7 @@
   <h1>Logowanie</h1>
   <form action="/admin/orders">
     <hr>
-    <label for="activeToken"><i class="fas fa-key"></i></label>
-    <input type="password" name="activeToken" id="activeToken" placeholder="Hasło" required/>
+    <input type="password" name="password" placeholder="Hasło" required/>
     <p class="error" th:text="${error}" style="text-align: center"></p>
     <hr>
     <div class="btn-block">
