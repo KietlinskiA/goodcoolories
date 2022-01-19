@@ -23,7 +23,6 @@ public class ClientService {
     private IngredientRepository ingredientRepository;
 
     private String errorToken;
-    private List<Dish> dishList;
 
     @Autowired
     public ClientService(DishRepository dishRepository, OrderRepository orderRepository, DietRepository dietRepository, UserRepository userRepository, IngredientRecipeRepository ingredientRecipeRepository, IngredientRepository ingredientRepository) {
@@ -34,7 +33,6 @@ public class ClientService {
         this.ingredientRecipeRepository = ingredientRecipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.errorToken = "";
-        dishList = new ArrayList<>();
     }
 
     public void saveOrder(User user, Order newOrder) {
@@ -52,29 +50,27 @@ public class ClientService {
         return dietRepository.existsByToken(token);
     }
 
-    public void setDishList(String token) {
-        if(!dishList.isEmpty()){
-            dishList.clear();
-        }
+    public List<Dish> getDishList(String token) {
+        List<Dish> dishList = new ArrayList<>();
         Diet diet = dietRepository.findByToken(token);
         List<Long> dishesIdByDietId = dishRepository.findDishesIdByDietId(diet.getDietId());
         for (Long dishId : dishesIdByDietId){
             Dish dish = dishRepository.getById(dishId);
-            System.out.println(dish);
             dishList.add(dish);
         }
+        return dishList;
     }
 
     public Dish getDishById(long dishId) {
         return dishRepository.getById(dishId);
     }
 
-    public List<String> getIngredientDescriptionList() {
-        List<IngredientRecipe> ingredientRecipeList = ingredientRecipeRepository.findAll();
+    public List<String> getIngredientDescriptionList(long recipeId) {
+        List<IngredientRecipe> ingredientRecipeList = ingredientRecipeRepository.getIngredientRecipesByRecipeId(recipeId);
         List<String> stringList = new ArrayList<>();
         for(IngredientRecipe ingredientRecipe : ingredientRecipeList){
             Ingredient ingredient = ingredientRecipe.getIngredient();
-            String weigthNumber = String.valueOf(ingredientRecipe.getProportions()*100);
+            String weigthNumber = String.valueOf((int)(ingredientRecipe.getProportions()*100));
             String string = weigthNumber + "g " + ingredient.getName();
             stringList.add(string);
         }
@@ -89,16 +85,18 @@ public class ClientService {
         }
         int kcal = 0;
         double b=0, t=0, w=0;
-        for(Ingredient ingredient : ingredientList){
-            kcal += ingredient.getKcal();
-            b += ingredient.getProtein();
-            t += ingredient.getFat();
-            w += ingredient.getCarbohydrates();
+        for(IngredientRecipe ingredientRecipe : ingredientRecipeList){
+            Ingredient ingredient = ingredientRecipe.getIngredient();
+            double proportions = ingredientRecipe.getProportions();
+            kcal += ingredient.getKcal() * proportions;
+            b += ingredient.getProtein() * proportions;
+            t += ingredient.getFat() * proportions;
+            w += ingredient.getCarbohydrates() * proportions;
         }
         String kcalString = "Kcal: "+kcal;
-        String bString = "B: "+b+"g";
-        String tString = "T: "+t+"g";
-        String wString = "W: "+w+"g";
+        String bString = "B: "+(int)b+"g";
+        String tString = "T: "+(int)t+"g";
+        String wString = "W: "+(int)w+"g";
         return List.of(kcalString, bString, tString, wString);
     }
 }

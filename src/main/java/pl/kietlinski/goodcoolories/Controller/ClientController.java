@@ -85,14 +85,13 @@ public class ClientController {
             return "redirect:/find";
         } else {
             clientService.setErrorToken("");
-            clientService.setDishList(token);
             return "redirect:/show-diet?token=" + token;
         }
     }
 
     @GetMapping("/show-diet")
     public String showDiet(@RequestParam String token, Model model) {
-        model.addAttribute("dishList", clientService.getDishList());
+        model.addAttribute("dishList", clientService.getDishList(token));
         model.addAttribute("token", token);
         return "client/showDiet";
     }
@@ -100,8 +99,9 @@ public class ClientController {
     @GetMapping("/show-dish")
     public String showDish(@RequestParam long dishId, @RequestParam String token, Model model) {
         Dish dishById = clientService.getDishById(dishId);
-        List<String> ingredientDescriptionList = clientService.getIngredientDescriptionList();
-        List<String> caloriesDescriptionList = clientService.getCaloriesDescriptionList(dishById.getRecipe().getRecipeId());
+        List<String> ingredientDescriptionList = clientService.getIngredientDescriptionList(dishById.getRecipe().getRecipeId());
+        List<String> caloriesDescriptionList = clientService.getCaloriesDescriptionList(
+                dishById.getRecipe().getRecipeId());
         model.addAttribute("dish", dishById);
         model.addAttribute("token", token);
         model.addAttribute("ingredientDescriptionList", ingredientDescriptionList);
