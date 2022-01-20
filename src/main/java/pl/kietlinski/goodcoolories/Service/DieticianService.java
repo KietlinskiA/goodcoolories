@@ -2,11 +2,14 @@ package pl.kietlinski.goodcoolories.Service;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Model.Dietician;
 import pl.kietlinski.goodcoolories.Repository.*;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ public class DieticianService {
     private final IngredientRepository ingredientRepository;
     private final IngredientRecipeRepository ingredientRecipeRepository;
     private final RecipeRepository recipeRepository;
+    private EmailService emailService;
     private Dietician dietician;
     private String error;
     private List<Ingredient> ingredientList;
@@ -29,15 +33,18 @@ public class DieticianService {
     private static String visibility;
     private static String VISIBLE = "visible";
     private static String HIDDEN = "hidden";
+    @Value("${spring.mail.username}")
+    private String springMailUsername;
 
     @Autowired
-    public DieticianService(OrderRepository orderRepository, DietRepository dietRepository, DishRepository dishRepository, IngredientRepository ingredientRepository, IngredientRecipeRepository ingredientRecipeRepository, RecipeRepository recipeRepository) {
+    public DieticianService(OrderRepository orderRepository, DietRepository dietRepository, DishRepository dishRepository, IngredientRepository ingredientRepository, IngredientRecipeRepository ingredientRecipeRepository, RecipeRepository recipeRepository ,EmailService emailService) {
         this.orderRepository = orderRepository;
         this.dietRepository = dietRepository;
         this.dishRepository = dishRepository;
         this.ingredientRepository = ingredientRepository;
         this.ingredientRecipeRepository = ingredientRecipeRepository;
         this.recipeRepository = recipeRepository;
+        this.emailService = emailService;
         dietician = new Dietician(1L, 123);
         error = "";
         ingredientList = ingredientRepository.findAll();
@@ -136,5 +143,12 @@ public class DieticianService {
     public boolean checkPassword(String password) {
         String dieticianToken = String.valueOf(dietician.getToken());
         return dieticianToken.equals(password);
+    }
+
+    public void sendEmailWithToken() throws MessagingException, UnsupportedEncodingException {
+        System.out.println("Tworzę szablon...");
+        String template = emailService.getTemplate();
+        System.out.println("Przygotowuję wysyłkę...");
+        emailService.sendEmail(springMailUsername, "porfavormario13@gmail.com", "Hej - Twoja dieta jest gotowa!", template);
     }
 }

@@ -1,6 +1,8 @@
 package pl.kietlinski.goodcoolories.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Service.DieticianService;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -114,8 +118,11 @@ public class DieticianController {
     @RequestMapping("/change-status")
     public String changeStatus(@RequestParam long orderId) {
         dieticianService.setStatus(orderId);
+        try {
+            dieticianService.sendEmailWithToken();
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return "redirect:/admin/order?orderId=" + orderId;
     }
-
-
 }

@@ -38,7 +38,7 @@ public class DataService {
         this.userRepository = userRepository;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void initDatabase() {
         User user1 = new UserBuilder()
                 .setName("Jan Kowal").setEaddress("j.k@wp.pl").setPhone("111111111").setStreet("Kowalska 1")
