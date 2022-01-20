@@ -32,10 +32,10 @@ public class EmailService {
         mailSender.send(mimeMessage);
     }
 
-    public String getTemplate(){
+    public String getTemplate(String token){
         JtwigTemplate template = JtwigTemplate.classpathTemplate("email/htmlEmail.twig");
         JtwigModel model = JtwigModel.newModel();
-        model.with("token", "112");
+        model.with("token", token);
 
         return template.render(model);
     }

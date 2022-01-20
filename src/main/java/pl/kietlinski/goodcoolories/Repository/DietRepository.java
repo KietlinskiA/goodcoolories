@@ -12,4 +12,5 @@ public interface DietRepository extends JpaRepository<Diet, Long> {
     Diet findByToken(String token);
 
 
+
 }

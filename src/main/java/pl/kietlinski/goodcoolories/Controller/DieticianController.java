@@ -119,7 +119,7 @@ public class DieticianController {
     public String changeStatus(@RequestParam long orderId) {
         dieticianService.setStatus(orderId);
         try {
-            dieticianService.sendEmailWithToken();
+            dieticianService.sendEmailWithToken(orderId);
         } catch (MessagingException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }

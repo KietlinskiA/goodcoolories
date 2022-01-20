@@ -145,10 +145,18 @@ public class DieticianService {
         return dieticianToken.equals(password);
     }
 
-    public void sendEmailWithToken() throws MessagingException, UnsupportedEncodingException {
-        System.out.println("Tworzę szablon...");
-        String template = emailService.getTemplate();
-        System.out.println("Przygotowuję wysyłkę...");
-        emailService.sendEmail(springMailUsername, "porfavormario13@gmail.com", "Hej - Twoja dieta jest gotowa!", template);
+    public void sendEmailWithToken(long orderId) throws MessagingException, UnsupportedEncodingException {
+        Order order = orderRepository.getById(orderId);
+        dietRepository.fin
+        setNewToken();
+        String eaddress = order.getUser().getEaddress();
+        String token = order.getDiet().getToken();
+        String token = "1234";
+        String template = emailService.getTemplate(token);
+        emailService.sendEmail(springMailUsername, eaddress, "Hej - Twoja dieta jest gotowa!", template);
+    }
+
+    public void setNewToken(long dietId) {
+        return "Hello";
     }
 }
