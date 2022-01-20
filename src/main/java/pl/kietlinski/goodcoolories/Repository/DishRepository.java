@@ -14,4 +14,6 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
     @Query(value = "SELECT dish_set_dish_id FROM diets_dish_set WHERE diet_set_diet_id = :dietId", nativeQuery = true)
     List<Long> findDishesIdByDietId(@Param("dietId") Long dietId);
 
+    boolean existsByName(String name);
+
 }

@@ -38,18 +38,18 @@ public class DataService {
         this.userRepository = userRepository;
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void initDatabase() {
         User user1 = new UserBuilder()
-                .setName("Jan Kowal").setEaddress("j.k@wp.pl").setPhone("111111111").setStreet("Kowalska 1")
+                .setName("Jan Kowal").setEaddress("dietetyk@goodcoolories.hub.pl").setPhone("111111111").setStreet("Kowalska 1")
                 .setZip("11-111").setCity("Kowalów").setAge(25).setHeight(187).setSex("Mężczyzna")
                 .createUser();
         User user2 = new UserBuilder()
-                .setName("Kamil Ul").setEaddress("k.u@wp.pl").setPhone("222222222").setStreet("Ulowa 3")
+                .setName("Kamil Ul").setEaddress("dietetyk@goodcoolories.hub.pl").setPhone("222222222").setStreet("Ulowa 3")
                 .setZip("22-222").setCity("Ulów").setAge(18).setHeight(173).setSex("Mężczyzna")
                 .createUser();
         User user3 = new UserBuilder()
-                .setName("Ala Lis").setEaddress("a.l@wp.pl").setPhone("333333333").setStreet("Lisia 2")
+                .setName("Ala Lis").setEaddress("dietetyk@goodcoolories.hub.pl").setPhone("333333333").setStreet("Lisia 2")
                 .setZip("33-333").setCity("Lisów").setAge(45).setHeight(162).setSex("Kobieta")
                 .createUser();
 

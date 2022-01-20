@@ -41,7 +41,9 @@ public class Recipe {
     @Override
     public String toString() {
         List<Long> ingredientIdList = new ArrayList<>();
-        ingredientRecipeSet.forEach(ingredientRecipe -> ingredientIdList.add(ingredientRecipe.getIngredientRecipeId()));
+        if(!ingredientRecipeSet.isEmpty()){
+            ingredientRecipeSet.forEach(ingredientRecipe -> ingredientIdList.add(ingredientRecipe.getIngredientRecipeId()));
+        }
         return "Recipe{" +
                 "recipeId=" + recipeId +
                 ", levelOfDifficulty='" + levelOfDifficulty + '\'' +

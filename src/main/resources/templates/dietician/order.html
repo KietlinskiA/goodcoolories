@@ -107,14 +107,22 @@
                        th:text="${order.getComment()}"></p>
                     <br/>
                     <p>
-                        Status: <span th:text="${order.getStatus()}"></span>
-                        <a class="button-p" style="float: right" th:href="'/admin/change-status?orderId='+${order.getOrderId()}">ZMIEŃ</a>
+                        Status: <span id="status-span" th:text="${order.getStatus()}"></span>
+                        <a type="submit" onclick="send()" class="button-p" style="float: right" th:href="'/admin/change-status?orderId='+${order.getOrderId()}">ZMIEŃ</a>
                     </p>
+                    <script>
+                        function send(){
+                            var text = document.getElementById('status-span').textContent;
+                            if(text !== 'Zakończony'){
+                                alert('Wysłano email z tokenem!');
+                            }
+                        }
+                    </script>
                 </div>
                 <div class="order-right-col">
                     <p>Lista posiłków:</p>
                     <br/>
-                    <div th:each="dish : ${orderDishList}">
+                    <div th:each="dish : ${dishListFromOrder}">
                         <p>
                             <a class="button-p" methods="delete"
                                th:href="'/admin/delete-dish-from-diet?orderId='+${order.getOrderId()}+'&dietId='+${order.getDiet().getDietId()}+'&dishId='+${dish.getDishId()}">X</a>
@@ -130,7 +138,7 @@
                         <select name="dishIdToAdd"
                                 style="width: 440px; height: 40px; font-size: 15px; margin: 0 0 20px 15px;" required>
                             <option value="" disabled></option>
-                            <option th:each="dish : ${allDishList}" th:text="${dish.getName()}"
+                            <option th:each="dish : ${dishListFromDb}" th:text="${dish.getName()}"
                                     th:value="${dish.getDishId()}"></option>
                         </select>
                         <br/>

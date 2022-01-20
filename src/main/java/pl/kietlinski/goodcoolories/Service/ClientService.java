@@ -36,6 +36,10 @@ public class ClientService {
     }
 
     public void saveOrder(User user, Order newOrder) {
+        String newToken = setNewToken();
+        Diet newDiet = new Diet(newToken);
+        dietRepository.save(newDiet);
+        newOrder.setDiet(newDiet);
         Optional<User> optionalUser = userRepository.findByPhone(user.getPhone());
         if(optionalUser.isEmpty()){
             userRepository.save(user);
@@ -44,6 +48,13 @@ public class ClientService {
             newOrder.setUser(optionalUser.get());
         }
         orderRepository.save(newOrder);
+    }
+
+    public String setNewToken() {
+        String lastToken = dietRepository.findHighestTokenNumberInDb();
+        int iToken = Integer.parseInt(lastToken);
+        iToken++;
+        return String.valueOf(iToken);
     }
 
     public boolean findTokenInDb(String token) {

@@ -1,8 +1,6 @@
 package pl.kietlinski.goodcoolories.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.kietlinski.goodcoolories.Entity.*;
 import pl.kietlinski.goodcoolories.Service.DieticianService;
 
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,14 +27,25 @@ public class DieticianController {
 
     @GetMapping
     public String get() {
-        return "redirect:admin/login";
+        return "redirect:/admin/login";
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String getStart(Model model) {
         model.addAttribute("error", dieticianService.getError());
-        model.addAttribute("password", "");
+        model.addAttribute("userPassword", "");
         return "dietician/login";
+    }
+
+    @RequestMapping("/checkPass")
+    public String login(@RequestParam String userPassword) {
+        if (dieticianService.checkPassword(userPassword)) {
+            dieticianService.setError("");
+            return "redirect:/admin/orders";
+        } else {
+            dieticianService.setError("Błędne hasło");
+            return "redirect:/admin/login";
+        }
     }
 
     @GetMapping("/logout")
@@ -44,30 +55,23 @@ public class DieticianController {
     }
 
     @GetMapping("/orders")
-    public String showOrders(@RequestParam String password, Model model) {
-        if(dieticianService.checkPassword(password)){
-            dieticianService.setError("");
-            List<Order> orderList = dieticianService.getOrderList();
-            model.addAttribute("orderList", orderList);
-            return "dietician/orders";
-        } else {
-            dieticianService.setError("Błędne hasło");
-            return "redirect:/admin/login";
-        }
+    public String showOrders(Model model) {
+        List<Order> orderList = dieticianService.getOrderListFromDb();
+        model.addAttribute("orderList", orderList);
+        return "dietician/orders";
     }
 
     @GetMapping("/order")
     public ModelAndView showOrder(@RequestParam long orderId, Model model) {
-        Order orderById = dieticianService.getOrderById(orderId);
-        User user = orderById.getUser();
-        dieticianService.setOrderDishList(orderById);
-        List<Dish> orderDishList = dieticianService.getOrderDishList();
-        List<Dish> allDishList = dieticianService.getAllDishList();
-        String visibility = dieticianService.getVisibility(orderDishList, orderById);
-        model.addAttribute("order", orderById);
+        Order order = dieticianService.getOrderById(orderId);
+        User user = order.getUser();
+        List<Dish> dishListFromOrder = dieticianService.getDishListFromOrder(order);
+        List<Dish> dishListFromDb = dieticianService.getDishListFromDb();
+        String visibility = dieticianService.getVisibility(dishListFromOrder, order);
+        model.addAttribute("order", order);
         model.addAttribute("user", user);
-        model.addAttribute("orderDishList", orderDishList);
-        model.addAttribute("allDishList", allDishList);
+        model.addAttribute("dishListFromOrder", dishListFromOrder);
+        model.addAttribute("dishListFromDb", dishListFromDb);
         model.addAttribute("visibility", visibility);
         return new ModelAndView("dietician/order");
     }
@@ -105,24 +109,55 @@ public class DieticianController {
                                 @RequestParam(required = false, defaultValue = "off") String ingredient3checkbox,
                                 @RequestParam(required = false) double ingredient3proportion,
                                 @RequestParam(required = false, defaultValue = "off") String ingredient4checkbox,
-                                @RequestParam(required = false) double ingredient4proportion) {
+                                @RequestParam(required = false) double ingredient4proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient5checkbox,
+                                @RequestParam(required = false) double ingredient5proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient6checkbox,
+                                @RequestParam(required = false) double ingredient6proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient7checkbox,
+                                @RequestParam(required = false) double ingredient7proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient8checkbox,
+                                @RequestParam(required = false) double ingredient8proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient9checkbox,
+                                @RequestParam(required = false) double ingredient9proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient10checkbox,
+                                @RequestParam(required = false) double ingredient10proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient11checkbox,
+                                @RequestParam(required = false) double ingredient11proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient12checkbox,
+                                @RequestParam(required = false) double ingredient12proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient13checkbox,
+                                @RequestParam(required = false) double ingredient13proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient14checkbox,
+                                @RequestParam(required = false) double ingredient14proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient15checkbox,
+                                @RequestParam(required = false) double ingredient15proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient16checkbox,
+                                @RequestParam(required = false) double ingredient16proportion,
+                                @RequestParam(required = false, defaultValue = "off") String ingredient17checkbox,
+                                @RequestParam(required = false) double ingredient17proportion, HttpServletRequest httpServletRequest) {
+        httpServletRequest.getParameterMap().forEach((key, values) -> System.out.println(key+":\t\t"+ Arrays.toString(values)));
         dieticianService.addDishToDb(
                 new Dish(name, photo),
                 new Recipe(levelOfDifficulty, preparationTime, description),
-                List.of(ingredient1checkbox, ingredient2checkbox, ingredient3checkbox, ingredient4checkbox),
-                List.of(ingredient1proportion, ingredient2proportion, ingredient3proportion, ingredient4proportion)
+                List.of(ingredient1checkbox, ingredient2checkbox, ingredient3checkbox, ingredient4checkbox,
+                        ingredient5checkbox, ingredient6checkbox, ingredient7checkbox, ingredient8checkbox,
+                        ingredient9checkbox, ingredient10checkbox, ingredient11checkbox, ingredient12checkbox,
+                        ingredient13checkbox, ingredient14checkbox, ingredient15checkbox, ingredient16checkbox,
+                        ingredient17checkbox),
+                List.of(ingredient1proportion, ingredient2proportion, ingredient3proportion, ingredient4proportion,
+                        ingredient5proportion, ingredient6proportion, ingredient7proportion, ingredient8proportion,
+                        ingredient9proportion, ingredient10proportion, ingredient11proportion, ingredient12proportion,
+                        ingredient13proportion, ingredient14proportion, ingredient15proportion, ingredient16proportion,
+                        ingredient17proportion)
         );
+
         return "redirect:/admin/add-recipe";
     }
 
     @RequestMapping("/change-status")
     public String changeStatus(@RequestParam long orderId) {
-        dieticianService.setStatus(orderId);
-        try {
-            dieticianService.sendEmailWithToken(orderId);
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        dieticianService.setStatusAndSendEmailWithToken(orderId);
         return "redirect:/admin/order?orderId=" + orderId;
     }
 }

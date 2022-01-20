@@ -139,13 +139,13 @@
 <body>
 <div class="main-block">
   <h1>Logowanie</h1>
-  <form action="/admin/orders">
+  <form th:action="@{/admin/checkPass}">
     <hr>
-    <input type="password" name="password" placeholder="Hasło" required/>
+    <input type="password" name="userPassword" placeholder="Hasło" required/>
     <p class="error" th:text="${error}" style="text-align: center"></p>
     <hr>
     <div class="btn-block">
-      <button type="submit" th:href="@{/admin/orders}">Zaloguj</button>
+      <button type="submit">Zaloguj</button>
     </div>
   </form>
 </div>

@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Dietician {
     private long dishId;
-    private int token;
+    private String userPassword;
 }

@@ -32,6 +32,9 @@
         textarea {
             width: calc(100% - 12px);
             padding: 5px;
+            resize: vertical;
+            min-height: 70px;
+            max-height: 250px;
         }
 
         .testbox {
@@ -267,8 +270,7 @@
             </div>
             <div class="item">
                 <label for="phone">Telefon<span>*</span></label>
-                <input id="phone" type="tel" placeholder="123456789" name="phone" maxlength="9"
-                       required/>
+                <input id="phone" type="number" name="phone" value="123456789" min="111111111" max="999999999" required/>
             </div>
             <div class="item">
                 <label for="street">Ulica<span>*</span></label>
@@ -345,7 +347,7 @@
         </div>
         <div class="item">
             <label for="comment">Uwagi dotyczące diety (napisz na co masz alergie, czego nie lubisz, itp.)</label>
-            <textarea id="comment" rows="3" name="comment" maxlength="1000" required></textarea>
+            <textarea id="comment" rows="3" style="size" name="comment" maxlength="1000" onresize="False" required></textarea>
         </div>
         <div class="question">
             <div class="question-answer">
